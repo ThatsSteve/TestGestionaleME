@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Fornitore - Missionedilizia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Styles for the navigation bar */
+        .top-nav {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #categoriaSuggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        #categoriaSuggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #categoriaSuggestions div:hover {
+            background-color: #f0f2f5;
+        }
+        #categoriaSuggestions div[style*="italic"] {
+            font-style: italic;
+            background-color: #e8f5e8;
+        }
+        #categoriaSuggestions div[style*="italic"]:hover {
+            background-color: #d4edda;
+        }
+        #fornitoreSuggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        #fornitoreSuggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #fornitoreSuggestions div:hover {
+            background-color: #f0f2f5;
+        }
+
+        /* Sistema di Notifiche Animate */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .notification {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left: 4px solid;
+            max-width: 300px;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.success {
+            border-left-color: #28a745;
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        }
+
+        .notification.info {
+            border-left-color: #17a2b8;
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        }
+
+        .notification.error {
+            border-left-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        }
+
+        .notification-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .notification.success .notification-icon {
+            color: #28a745;
+        }
+
+        .notification.info .notification-icon {
+            color: #17a2b8;
+        }
+
+        .notification.error .notification-icon {
+            color: #dc3545;
+        }
+
+        .button-saving {
+            position: relative;
+            color: transparent !important;
+        }
+
+        .button-saving::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="top-nav">
+        <div class="nav-title">Aggiungi Fornitore</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="navigateBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Indietro
+            </button>
+        </div>
+    </div>
+    
+    <!-- Container per le notifiche animate -->
+    <div id="notification-container" class="notification-container"></div>
+    
+    <div class="container">
+        <h1>Aggiungi Fornitore</h1>
+        <form id="addFornitoreForm">
+            <div class="form-group">
+                <label for="descrizione">Ragione Sociale</label>
+                <input type="text" id="descrizione" name="descrizione" required>
+                <div id="fornitoreSuggestions"></div>
+            </div>
+            <div class="form-group">
+                <label for="cellulari">Cellulari</label>
+                <input type="tel" id="cellulari" name="cellulari">
+            </div>
+            <div class="form-group">
+                <label for="numero_dipendenti">Numero Dipendenti</label>
+                <input type="text" id="numero_dipendenti" name="numero_dipendenti">
+            </div>
+            <div class="form-group">
+                <label for="sito_web">Sito Web (opzionale)</label>
+                <input type="text" id="sito_web" name="sito_web" placeholder="Inserisci il sito web dell'azienda">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="partita_iva">Partita IVA</label>
+                <input type="text" id="partita_iva" name="partita_iva">
+            </div>
+            <div class="form-group">
+                <label for="codice_fiscale">Codice Fiscale</label>
+                <input type="text" id="codice_fiscale" name="codice_fiscale">
+            </div>
+            <div class="form-group">
+                <label for="specialita">Specialità</label>
+                <textarea id="specialita" name="specialita" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="luogo">Luogo</label>
+                <input type="text" id="luogo" name="luogo">
+            </div>
+            <div class="form-group">
+                <label for="note">Note</label>
+                <textarea id="note" name="note" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <input type="text" id="categoria" name="categoria" required>
+                <input type="hidden" id="categoria_id" name="categoria_id">
+                <div id="categoriaSuggestions"></div>
+            </div>
+            <button type="submit">Aggiungi Fornitore</button>
+        </form>
+    </div>
+    <script>
+        // Funzione per tornare indietro
+        function navigateBack() {
+            if (window.parent) {
+                // Se il contenuto è caricato in un iframe
+                window.parent.closeIframeFromChild();
+            } else {
+                // Se il contenuto è aperto in una nuova finestra
+                window.close();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // ========== SISTEMA DI NOTIFICHE ANIMATE ==========
+            function showNotification(message, type = 'success', duration = 3000) {
+                const container = document.getElementById('notification-container');
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                
+                const icons = {
+                    success: `<svg class="notification-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                    </svg>`,
+                    info: `<svg class="notification-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
+                    </svg>`,
+                    error: `<svg class="notification-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+                    </svg>`
+                };
+                
+                notification.innerHTML = `
+                    ${icons[type] || icons.info}
+                    <span>${message}</span>
+                `;
+                
+                container.appendChild(notification);
+                setTimeout(() => notification.classList.add('show'), 100);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (container.contains(notification)) {
+                            container.removeChild(notification);
+                        }
+                    }, 300);
+                }, duration);
+            }
+
+            function setButtonLoading(buttonElement, loading = true) {
+                if (loading) {
+                    buttonElement.classList.add('button-saving');
+                    buttonElement.disabled = true;
+                    buttonElement.dataset.originalText = buttonElement.textContent;
+                    buttonElement.textContent = 'Salvando...';
+                } else {
+                    buttonElement.classList.remove('button-saving');
+                    buttonElement.disabled = false;
+                    if (buttonElement.dataset.originalText) {
+                        buttonElement.textContent = buttonElement.dataset.originalText;
+                    }
+                }
+            }
+            // ========== FINE SISTEMA NOTIFICHE ==========
+
+            const categoriaInput = document.getElementById('categoria');
+            const categoriaSuggestions = document.getElementById('categoriaSuggestions');
+            let categorie = [];
+
+            // Fetch categories
+            function fetchCategorie() {
+                fetch('/api/categorie/')
+                    .then(response => response.json())
+                    .then(data => {
+                        categorie = data.categorie;
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il caricamento delle categorie:', error);
+                    });
+            }
+
+            fetchCategorie();
+
+            // Handle categoria input
+            categoriaInput.addEventListener('input', function() {
+                const input = this.value.toLowerCase();
+                categoriaSuggestions.innerHTML = '';
+
+                if (input.length > 0) {
+                    const matchedCategorie = categorie.filter(categoria => 
+                        categoria.nome.toLowerCase().includes(input)
+                    );
+
+                    matchedCategorie.forEach(categoria => {
+                        const div = document.createElement('div');
+                        div.textContent = categoria.nome;
+                        div.onclick = function() {
+                            categoriaInput.value = categoria.nome;
+                            document.getElementById('categoria_id').value = categoria.id;
+                            categoriaInput.dataset.categoriaId = categoria.id;
+                            categoriaSuggestions.innerHTML = '';
+                        };
+                        categoriaSuggestions.appendChild(div);
+                    });
+
+                    if (matchedCategorie.length === 0) {
+                        const div = document.createElement('div');
+                        div.textContent = `Crea "${input}"`;
+                        div.style.fontStyle = 'italic';
+                        div.style.backgroundColor = '#e8f5e8';
+                        div.onclick = function() {
+                            aggiungiNuovaCategoria(input);
+                        };
+                        categoriaSuggestions.appendChild(div);
+                    }
+                }
+            });
+
+            function aggiungiNuovaCategoria(nome) {
+                showNotification('Creando nuova categoria...', 'info', 2000);
+                
+                fetch('/api/add_categoria/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nome: nome })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showNotification('Categoria creata con successo!', 'success');
+                        categoriaInput.value = data.categoria.nome;
+                        document.getElementById('categoria_id').value = data.categoria.id;
+                        categoriaInput.dataset.categoriaId = data.categoria.id;
+                        categoriaSuggestions.innerHTML = '';
+                        fetchCategorie();  // Aggiorna la lista delle categorie
+                    } else {
+                        showNotification('Errore durante la creazione della categoria: ' + data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante la creazione della categoria:', error);
+                    showNotification('Errore di connessione durante la creazione della categoria', 'error');
+                });
+            }
+
+            // Handle form submission
+            const form = document.getElementById('addFornitoreForm');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Normalizza l'URL del sito web prima dell'invio
+                const sitoWebInput = document.getElementById('sito_web');
+                sitoWebInput.value = normalizzaSitoWeb(sitoWebInput.value);
+                
+                // Gestisci la categoria - se è stata inserita manualmente, creala prima
+                async function handleCategoriaAndSubmit() {
+                    const submitButton = document.querySelector('button[type="submit"]');
+                    setButtonLoading(submitButton, true);
+                    
+                    const categoriaInput = document.getElementById('categoria');
+                    let categoria_id = document.getElementById('categoria_id').value || categoriaInput.dataset.categoriaId;
+                    
+                    // Se non c'è un categoria_id ma c'è un valore nel campo categoria, crea una nuova categoria
+                    if (!categoria_id && categoriaInput.value.trim()) {
+                        try {
+                            showNotification('Creando categoria...', 'info', 2000);
+                            const response = await fetch('/api/add_categoria/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ nome: categoriaInput.value.trim() })
+                            });
+                            const data = await response.json();
+                            if (data.status === 'success') {
+                                categoria_id = data.categoria.id;
+                                document.getElementById('categoria_id').value = categoria_id;
+                                categoriaInput.dataset.categoriaId = categoria_id;
+                                showNotification('Categoria creata!', 'success');
+                            }
+                        } catch (error) {
+                            console.error('Errore durante la creazione della categoria:', error);
+                            showNotification('Errore durante la creazione della categoria', 'error');
+                        }
+                    }
+                    
+                    showNotification('Salvando il fornitore...', 'info', 3000);
+                    
+                    // Ora procedi con l'invio del form
+                    const formData = new FormData(form);
+                    formData.set('categoria_id', categoria_id || '');
+
+                    fetch('/api/add_fornitore/', {
+                        method: 'POST',
+                        body: JSON.stringify(Object.fromEntries(formData)),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            showNotification('Fornitore salvato con successo!', 'success', 2000);
+                            setButtonLoading(submitButton, false);
+                            
+                            // Aggiungi alla cronologia globale
+                            if (window.parent && window.parent.addToGlobalHistory) {
+                                const descrizione = document.getElementById('descrizione').value;
+                                window.parent.addToGlobalHistory('supplier', 'create', 
+                                    `Nuovo fornitore creato: "${descrizione}"`, 
+                                    data.fornitore_id
+                                );
+                            }
+
+                            // Chiudi l'iframe richiamando la funzione nel contesto parent
+                            setTimeout(() => {
+                                if (window.parent && typeof window.parent.closeIframeFromChild === 'function') {
+                                    window.parent.closeIframeFromChild();
+                                } else {
+                                    showNotification('Fornitore aggiunto con successo!', 'success');
+                                }
+                            }, 1000);
+                        } else {
+                            setButtonLoading(submitButton, false);
+                            showNotification('Errore durante l\'aggiunta del fornitore', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Errore durante la richiesta:', error);
+                        setButtonLoading(submitButton, false);
+                        showNotification('Errore di connessione durante il salvataggio', 'error');
+                    });
+                }
+                
+                handleCategoriaAndSubmit();
+            });
+
+            let fornitori = [];
+
+            // Fetch fornitori (similar to fetchClienti in createTicket)
+            function fetchFornitori() {
+                fetch('/api/fornitori')
+                    .then(response => response.json())
+                    .then(data => { 
+                        fornitori = data; 
+                    })
+                    .catch(error => console.error('Errore nel caricamento fornitori:', error));
+            }
+
+            fetchFornitori();
+
+            // Funzione per normalizzare l'URL del sito web
+            function normalizzaSitoWeb(url) {
+                if (!url || url.trim() === '') return '';
+                
+                url = url.trim();
+                
+                // Se contiene già http:// o https://, restituisci così com'è
+                if (url.match(/^https?:\/\//i)) {
+                    return url;
+                }
+                
+                // Se sembra un dominio, aggiungi https://
+                if (url.includes('.') && !url.includes(' ')) {
+                    return `https://${url}`;
+                }
+                
+                // Altrimenti restituisci così com'è
+                return url;
+            }
+
+            // Aggiungi listener per normalizzare il sito web quando l'utente esce dal campo
+            const sitoWebInput = document.getElementById('sito_web');
+            sitoWebInput.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    const normalizedUrl = normalizzaSitoWeb(this.value);
+                    this.value = normalizedUrl;
+                }
+            });
+
+            // Handle 'descrizione' input to show suggestions
+            const descrizioneInput = document.getElementById('descrizione');
+            const fornitoreSuggestions = document.getElementById('fornitoreSuggestions');
+
+            descrizioneInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                fornitoreSuggestions.innerHTML = '';
+                if (query.length > 0) {
+                    const matched = fornitori.filter(f => 
+                        f.Nome && f.Nome.toLowerCase().includes(query)
+                    );
+                    matched.forEach(f => {
+                        const div = document.createElement('div');
+                        div.textContent = f.Nome;
+                        div.onclick = function() {
+                            // Apri iframe update invece di aggiungere
+                            if (window.parent && typeof window.parent.openIframe === 'function') {
+                                window.parent.openIframe(`/update_fornitore_iframe/${f.id}`);
+                            } else {
+                                alert('Selezionato fornitore esistente con ID ' + f.id);
+                            }
+                        };
+                        fornitoreSuggestions.appendChild(div);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

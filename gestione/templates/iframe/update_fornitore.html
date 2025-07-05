@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica Fornitore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Styles for the navigation bar */
+        .top-nav {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100% - 50px); /* Adjusted for the nav bar */
+        }
+        .form-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #categoriaSuggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        #categoriaSuggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #categoriaSuggestions div:hover {
+            background-color: #f0f2f5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="top-nav">
+        <div class="nav-title">Modifica Fornitore</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="navigateBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Indietro
+            </button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <h1>Modifica Fornitore</h1>
+            <form id="fornitore-form">
+                <div class="form-group">
+                    <label for="descrizione">Descrizione</label>
+                    <input type="text" id="descrizione" name="descrizione" required>
+                </div>
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" >
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" name="cognome" >
+                </div>
+                <div class="form-group">
+                    <label for="attivita">Attività</label>
+                    <input type="text" id="attivita" name="attivita">
+                </div>
+                <div class="form-group">
+                    <label for="cellulari">Cellulari</label>
+                    <input type="text" id="cellulari" name="cellulari">
+                </div>
+                <div class="form-group">
+                    <label for="numero_dipendenti">Numero Dipendenti</label>
+                    <input type="number" id="numero_dipendenti" name="numero_dipendenti">
+                </div>
+                <div class="form-group">
+                    <label for="sito_web">Sito Web (opzionale)</label>
+                    <input type="text" id="sito_web" name="sito_web" placeholder="Inserisci il sito web dell'azienda">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="partita_iva">Partita IVA</label>
+                    <input type="text" id="partita_iva" name="partita_iva">
+                </div>
+                <div class="form-group">
+                    <label for="specialita">Specialità</label>
+                    <input type="text" id="specialita" name="specialita">
+                </div>
+                <div class="form-group">
+                    <label for="luogo">Luogo</label>
+                    <input type="text" id="luogo" name="luogo">
+                </div>
+                <div class="form-group">
+                    <label for="note">Note</label>
+                    <textarea id="note" name="note" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoria</label>
+                    <input type="text" id="categoria" name="categoria" required>
+                    <input type="hidden" id="categoria_id" name="categoria_id">
+                    <div id="categoriaSuggestions" style="position: absolute; background-color: white; border: 1px solid #ddd; border-radius: 4px; max-height: 200px; overflow-y: auto; z-index: 1000; display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="codice_fiscale">Codice Fiscale</label>
+                    <input type="text" id="codice_fiscale" name="codice_fiscale">
+                </div>
+                <div class="form-group">
+                    <label for="affidabilita">Affidabilità</label>
+                    <input type="number" id="affidabilita" name="affidabilita" min="0" max="100">
+                </div>
+                <button type="submit">Salva</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per tornare indietro
+        function navigateBack() {
+            if (window.parent) {
+                // Se il contenuto è caricato in un iframe
+                window.parent.closeIframeFromChild();
+            } else {
+                // Se il contenuto è aperto in una nuova finestra
+                window.close();
+            }
+        }
+        
+        let fornitoreData;
+        let categorie;
+
+        window.onload = async function () {
+            try {
+                fornitoreData = JSON.parse(decodeURIComponent('{{ fornitore_json|escapejs }}'));
+                console.log('fornitoreData:', fornitoreData);
+
+                // Funzione helper per gestire valori N/A
+                function sanitizeValue(value) {
+                    if (value === 'N/A' || value === 'n/a' || value === null || value === undefined) {
+                        return '';
+                    }
+                    return value;
+                }
+
+                // Popola i campi del form con gestione dei valori N/A
+                document.getElementById('descrizione').value = sanitizeValue(fornitoreData.descrizione);
+                document.getElementById('nome').value = sanitizeValue(fornitoreData.nome);
+                document.getElementById('cognome').value = sanitizeValue(fornitoreData.cognome);
+                document.getElementById('attivita').value = sanitizeValue(fornitoreData.attivita);
+                document.getElementById('cellulari').value = sanitizeValue(fornitoreData.cellulari);
+                document.getElementById('numero_dipendenti').value = sanitizeValue(fornitoreData.numero_dipendenti);
+                document.getElementById('sito_web').value = sanitizeValue(fornitoreData.sito_web);
+                document.getElementById('email').value = sanitizeValue(fornitoreData.email);
+                document.getElementById('partita_iva').value = sanitizeValue(fornitoreData.partita_iva);
+                document.getElementById('specialita').value = sanitizeValue(fornitoreData.specialita);
+                document.getElementById('luogo').value = sanitizeValue(fornitoreData.luogo);
+                document.getElementById('note').value = sanitizeValue(fornitoreData.note);
+                document.getElementById('codice_fiscale').value = sanitizeValue(fornitoreData.codice_fiscale);
+                document.getElementById('affidabilita').value = sanitizeValue(fornitoreData.affidabilita);
+
+                // Carica le categorie e poi popola il campo categoria
+                await fetchCategorie();
+                
+                // Inizializza la gestione della categoria
+                initializeCategoriaHandling();
+                
+                // Popola il campo categoria con il nome della categoria se esiste
+                if (fornitoreData.categoria_id) {
+                    document.getElementById('categoria_id').value = fornitoreData.categoria_id;
+                    
+                    // Trova la categoria corrispondente e popola il campo testo
+                    const categoriaCorrispondente = categorie.find(cat => cat.id == fornitoreData.categoria_id);
+                    if (categoriaCorrispondente) {
+                        document.getElementById('categoria').value = categoriaCorrispondente.nome;
+                        document.getElementById('categoria').dataset.categoriaId = categoriaCorrispondente.id;
+                    }
+                }
+            } catch (error) {
+                console.error('Errore durante il caricamento dei dati:', error);
+            }
+        };
+
+        async function fetchCategorie() {
+            try {
+                const response = await fetch('/api/categorie/');
+                const data = await response.json();
+                categorie = data.categorie;
+            } catch (error) {
+                console.error('Errore durante il caricamento delle categorie:', error);
+            }
+        }
+
+        // Gestione categoria con auto-completamento
+        function initializeCategoriaHandling() {
+            const categoriaInput = document.getElementById('categoria');
+            const categoriaSuggestions = document.getElementById('categoriaSuggestions');
+
+            // Handle categoria input
+            categoriaInput.addEventListener('input', function() {
+                const input = this.value.toLowerCase();
+                categoriaSuggestions.innerHTML = '';
+                categoriaSuggestions.style.display = 'none';
+
+                if (input.length > 0) {
+                    const matchedCategorie = categorie.filter(categoria => 
+                        categoria.nome.toLowerCase().includes(input)
+                    );
+
+                    if (matchedCategorie.length > 0 || !matchedCategorie.some(cat => cat.nome.toLowerCase() === input)) {
+                        categoriaSuggestions.style.display = 'block';
+                    }
+
+                    matchedCategorie.forEach(categoria => {
+                        const div = document.createElement('div');
+                        div.textContent = categoria.nome;
+                        div.onclick = function() {
+                            categoriaInput.value = categoria.nome;
+                            document.getElementById('categoria_id').value = categoria.id;
+                            categoriaInput.dataset.categoriaId = categoria.id;
+                            categoriaSuggestions.innerHTML = '';
+                            categoriaSuggestions.style.display = 'none';
+                        };
+                        categoriaSuggestions.appendChild(div);
+                    });
+
+                    if (matchedCategorie.length === 0) {
+                        const div = document.createElement('div');
+                        div.textContent = `Crea "${input}"`;
+                        div.style.fontStyle = 'italic';
+                        div.style.backgroundColor = '#e8f5e8';
+                        div.onclick = function() {
+                            aggiungiNuovaCategoria(input);
+                        };
+                        categoriaSuggestions.appendChild(div);
+                    }
+                }
+            });
+
+            // Nascondi suggerimenti quando si clicca fuori
+            document.addEventListener('click', function(e) {
+                if (!categoriaInput.contains(e.target) && !categoriaSuggestions.contains(e.target)) {
+                    categoriaSuggestions.style.display = 'none';
+                }
+            });
+        }
+
+        function aggiungiNuovaCategoria(nome) {
+            fetch('/api/add_categoria/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome: nome })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const categoriaInput = document.getElementById('categoria');
+                    categoriaInput.value = data.categoria.nome;
+                    document.getElementById('categoria_id').value = data.categoria.id;
+                    categoriaInput.dataset.categoriaId = data.categoria.id;
+                    document.getElementById('categoriaSuggestions').innerHTML = '';
+                    document.getElementById('categoriaSuggestions').style.display = 'none';
+                    fetchCategorie();  // Aggiorna la lista delle categorie
+                } else {
+                    alert('Errore durante la creazione della categoria: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Errore durante la creazione della categoria:', error);
+            });
+        }
+
+        // Funzione per normalizzare l'URL del sito web
+        function normalizzaSitoWeb(url) {
+            if (!url || url.trim() === '') return '';
+            
+            url = url.trim();
+            
+            // Se contiene già http:// o https://, restituisci così com'è
+            if (url.match(/^https?:\/\//i)) {
+                return url;
+            }
+            
+            // Se sembra un dominio, aggiungi https://
+            if (url.includes('.') && !url.includes(' ')) {
+                return `https://${url}`;
+            }
+            
+            // Altrimenti restituisci così com'è
+            return url;
+        }
+
+        // Aggiungi listener per normalizzare il sito web quando l'utente esce dal campo
+        document.addEventListener('DOMContentLoaded', function() {
+            const sitoWebInput = document.getElementById('sito_web');
+            sitoWebInput.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    const normalizedUrl = normalizzaSitoWeb(this.value);
+                    this.value = normalizedUrl;
+                }
+            });
+        });
+
+        document.getElementById('fornitore-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validazione personalizzata dell'email
+            const emailValue = document.getElementById('email').value.trim();
+            if (emailValue && emailValue !== 'N/A' && emailValue !== 'n/a') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailValue)) {
+                    alert('Inserisci un indirizzo email valido o lascia il campo vuoto');
+                    return;
+                }
+            }
+            
+            // Normalizza l'URL del sito web prima dell'invio
+            const sitoWebInput = document.getElementById('sito_web');
+            sitoWebInput.value = normalizzaSitoWeb(sitoWebInput.value);
+            
+            // Gestisci la categoria - se è stata inserita manualmente, creala prima
+            const categoriaInput = document.getElementById('categoria');
+            let categoria_id = document.getElementById('categoria_id').value || categoriaInput.dataset.categoriaId;
+            
+            // Se non c'è un categoria_id ma c'è un valore nel campo categoria, crea una nuova categoria
+            if (!categoria_id && categoriaInput.value.trim()) {
+                try {
+                    const response = await fetch('/api/add_categoria/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ nome: categoriaInput.value.trim() })
+                    });
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        categoria_id = data.categoria.id;
+                    }
+                } catch (error) {
+                    console.error('Errore durante la creazione della categoria:', error);
+                }
+            }
+            
+            const descrizione = document.getElementById('descrizione').value;
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+            const attivita = document.getElementById('attivita').value;
+            const cellulari = document.getElementById('cellulari').value;
+            const numero_dipendenti = document.getElementById('numero_dipendenti').value;
+            const sito_web = document.getElementById('sito_web').value;
+            const email = document.getElementById('email').value;
+            const partita_iva = document.getElementById('partita_iva').value;
+            const specialita = document.getElementById('specialita').value;
+            const luogo = document.getElementById('luogo').value;
+            const note = document.getElementById('note').value;
+            const codice_fiscale = document.getElementById('codice_fiscale').value;
+            const affidabilita = document.getElementById('affidabilita').value;
+
+            const fornitoreDataToSend = {
+                descrizione,
+                nome,
+                cognome,
+                attivita,
+                cellulari,
+                numero_dipendenti,
+                sito_web,
+                email,
+                partita_iva,
+                specialita,
+                luogo,
+                note,
+                categoria_id,
+                codice_fiscale,
+                affidabilita
+            };
+
+            try {
+                const response = await fetch(`/update_fornitore/${fornitoreData.id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(fornitoreDataToSend),
+                });
+
+                if (response.ok) {
+                    // Aggiungi alla cronologia globale
+                    if (window.parent && window.parent.addToGlobalHistory) {
+                        window.parent.addToGlobalHistory('supplier', 'update', 
+                            `Fornitore modificato: "${descrizione}"`, 
+                            fornitoreData.id
+                        );
+                    }
+
+                    // Chiudi l'iframe o la finestra
+                    if (window.parent) {
+                        // Se il contenuto è in un iframe
+                        window.parent.closeIframeFromChild();
+                    } else {
+                        // Se il contenuto è in una nuova finestra
+                        window.close();
+                    }
+                } else {
+                    throw new Error('Errore durante il salvataggio.');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore durante il salvataggio.');
+            }
+        });
+    </script>
+</body>
+</html>

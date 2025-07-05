@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Cliente - Missionedilizia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body >
+    <div class="container bg-white rounded-lg shadow-lg p-6">
+        <h1>Aggiungi Cliente</h1>
+        <form id="addClienteForm">
+            <div class="form-group">
+                <label for="descrizione">Descrizione</label>
+                <input type="text" id="descrizione" name="descrizione" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome">
+            </div>
+            <div class="form-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" id="cognome" name="cognome">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="cellulare">Cellulare</label>
+                <input type="tel" id="cellulare" name="cellulare">
+            </div>
+            <div class="form-group">
+                <label for="indirizzo">Indirizzo</label>
+                <textarea id="indirizzo" name="indirizzo" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="piva">Partita IVA</label>
+                <input type="text" id="piva" name="piva">
+            </div>
+            <button type="submit">Aggiungi Cliente</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('addClienteForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+    
+                fetch('/api/add_cliente/', {
+                    method: 'POST',
+                    body: JSON.stringify(Object.fromEntries(formData)),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Chiudi l'iframe richiamando la funzione nel contesto parent
+                        if (window.parent && typeof window.parent.closeIframeFromChild === 'function') {
+                            window.parent.closeIframeFromChild();
+                        } else {
+                            console.error('Funzione closeIframeFromChild non trovata nel contesto parent.');
+                        }
+                    } else {
+                        alert('Errore durante l\'aggiunta del cliente');
+                    }
+                })
+                .catch(error => console.error('Errore durante la richiesta:', error));
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Clienti - Missionedilizia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sort-icon::after {
+            content: '\25B2';
+            padding-left: 5px;
+        }
+        .sort-icon.desc::after {
+            content: '\25BC';
+        }
+        .action-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-left: auto;
+            padding-right: 8px;
+        }
+        .action-icons svg {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+        .iframe-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .iframe-content {
+            position: relative;
+            width: 72%;
+            height: 72%;
+            margin: 4% auto;
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden;
+        }
+        .close-iframe {
+            position: absolute;
+            right: 10px; 
+            color: #000000;
+            font-size: 25px;
+            font-weight: bold; 
+            cursor: pointer;
+            z-index: 1001;
+        }
+        #iframeContent {
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 1.2rem; /* Larger font size */
+        }
+        .clickable {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .confirmation-content {
+            background-color: #ffffff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .confirmation-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .confirmation-buttons button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .confirmation-buttons .confirm {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        .confirmation-buttons .cancel {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+        
+        /* Stili per il pulsante WhatsApp */
+        .whatsapp-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px;
+        }
+        
+        .whatsapp-btn:hover {
+            opacity: 0.7;
+        }
+        
+        .whatsapp-logo {
+            width: 28px;
+            height: 28px;
+        }
+        
+        /* Stili per il popup di selezione numero */
+        .phone-selector-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            overflow: auto;
+        }
+        
+        .phone-selector-content {
+            background-color: #ffffff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .phone-selector-content h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .phone-number-btn {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .phone-number-btn:hover {
+            background-color: #1da851;
+        }
+        
+        .cancel-phone-btn {
+            background-color: #ccc;
+            color: #333;
+        }
+        
+        .cancel-phone-btn:hover {
+            background-color: #bbb;
+        }
+        
+        /* Stili per il pulsante email */
+        .email-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px;
+            margin-left: 8px;
+        }
+        
+        .email-btn:hover {
+            opacity: 0.7;
+        }
+        
+        .email-logo {
+            width: 24px;
+            height: 24px;
+        }
+        
+        header {
+            height: 64px; /* Altezza uniforme per l'header */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header .h-10 {
+            height: 40px; /* Altezza uniforme per il logo */
+        }
+        header input {
+            height: 40px; /* Altezza uniforme per l'input di ricerca */
+        }
+        header button {
+            height: 40px; /* Altezza uniforme per i pulsanti */
+        }
+        
+        /* Slider orizzontale per la tabella */
+        .table-horizontal-scrollbar {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 16px;
+            background: rgba(241, 245, 249, 0.95);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            z-index: 50;
+            display: none;
+        }
+        
+        .table-horizontal-scrollbar-thumb {
+            height: 100%;
+            background: linear-gradient(to right, #f4a81e, #e8941a);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 30px;
+            position: relative;
+        }
+        
+        .table-horizontal-scrollbar-thumb:hover {
+            background: linear-gradient(to right, #e8941a, #d68516);
+            transform: scaleY(1.2);
+        }
+        
+        .table-horizontal-scrollbar-thumb:active {
+            background: linear-gradient(to right, #d68516, #c47914);
+        }
+        
+        /* Assicurati che la tabella possa essere scorsa */
+        .table-slider {
+            overflow-x: auto !important;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .table-slider::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col" style="background: linear-gradient(to bottom right, #f4a81e, #7a7a7a);">
+    <!-- Header -->
+    <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <a href="/"><img src="/static/LogoSmall.png" alt="Missionedilizia Logo" class="h-10"></a>
+        </div>
+        
+        <!-- Menu di navigazione -->
+        <div class="flex items-center space-x-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-2 shadow-lg border border-gray-200 backdrop-blur-sm ml-8">
+            <a href="/fornitori" class="px-6 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-800 hover:bg-white hover:shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out">
+                <span class="flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                    <span>Fornitori</span>
+                </span>
+            </a>
+            <a href="/clienti" class="px-6 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out">
+                <span class="flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                    <span>Clienti</span>
+                </span>
+            </a>
+        </div>
+        
+        <div class="flex-1 flex justify-center">
+            <div class="relative w-1/2">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cerca..."
+                    class="w-full p-2 pl-10 bg-white border border-gray-400 rounded-full shadow-sm focus:outline-none focus:border-gray-600"
+                />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+        <div class="relative flex items-center space-x-4">
+            <button
+                class="bg-green-500 text-white h-10 w-10 rounded-full shadow-lg hover:bg-green-600 flex items-center justify-center text-2xl transition"
+                id="addClientBtn"
+                style="padding-top: 0"
+            >
+                +
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="table-slider" id="tableSlider">
+                <table class="min-w-full divide-y divide-gray-200 shadow-lg">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="descrizione">Descrizione</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="cognome">Cognome</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="nome">Nome</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="cellulare">Cellulare</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WhatsApp</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="email">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="indirizzo">Indirizzo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="codice_fiscale">Codice Fiscale</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer" data-sort="piva">Partita IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Righe generate dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Barra di scorrimento orizzontale per la tabella -->
+    <div id="tableHorizontalScrollbar" class="table-horizontal-scrollbar">
+        <div id="tableHorizontalScrollbarThumb" class="table-horizontal-scrollbar-thumb"></div>
+    </div>
+
+    <!-- Iframe Modal -->
+    <div id="iframeModal" class="iframe-modal">
+        <div class="iframe-content">
+            <span onclick="closeIframe()" class="close-iframe">&times;</span>
+            <iframe id="iframeContent"></iframe>
+        </div>
+    </div>
+
+    <!-- Update the confirmation modal HTML -->
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="confirmation-content">
+            <p>Sei sicuro di voler eliminare questo cliente?</p>
+            <div class="confirmation-buttons">
+                <button class="confirm" onclick="confirmDelete()">Conferma</button>
+                <button class="cancel" onclick="cancelDelete()">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phone selector modal for WhatsApp -->
+    <div id="phoneSelectorModal" class="phone-selector-modal">
+        <div class="phone-selector-content">
+            <h3>Seleziona il numero per WhatsApp</h3>
+            <div id="phoneNumberButtons"></div>
+            <button class="phone-number-btn cancel-phone-btn" onclick="closePhoneSelector()">Annulla</button>
+        </div>
+    </div>
+
+    <script>
+        let clients = [];
+        let selectedClientId = null;
+
+        // Funzioni per WhatsApp
+        function isCellPhone(number) {
+            const cleanNumber = number.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+            return /^(3\d{8,9}|00393\d{8,9}|\+393\d{8,9})$/.test(cleanNumber) || 
+                   /^(3\d{8,9})$/.test(cleanNumber.replace(/^\+39/, '').replace(/^0039/, ''));
+        }
+
+        function normalizePhoneForWhatsApp(number) {
+            let cleanNumber = number.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+            
+            if (cleanNumber.startsWith('+39')) {
+                cleanNumber = cleanNumber.substring(3);
+            } else if (cleanNumber.startsWith('0039')) {
+                cleanNumber = cleanNumber.substring(4);
+            }
+            
+            if (!cleanNumber.startsWith('39') && cleanNumber.length === 10) {
+                cleanNumber = '39' + cleanNumber;
+            }
+            
+            return cleanNumber;
+        }
+
+        function extractCellPhones(phoneString) {
+            if (!phoneString) return [];
+            const numbers = phoneString.split(/[,;]|\s{2,}/).map(n => n.trim()).filter(n => n);
+            return numbers.filter(number => isCellPhone(number));
+        }
+
+        function openWhatsApp(phoneNumber) {
+            const normalizedNumber = normalizePhoneForWhatsApp(phoneNumber);
+            const whatsappUrl = `https://wa.me/${normalizedNumber}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function handleWhatsAppClick(phoneString, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const cellPhones = extractCellPhones(phoneString);
+            
+            if (cellPhones.length === 0) {
+                alert('Nessun numero di cellulare valido trovato');
+                return;
+            }
+            
+            if (cellPhones.length === 1) {
+                openWhatsApp(cellPhones[0]);
+            } else {
+                showPhoneSelector(cellPhones);
+            }
+        }
+
+        function showPhoneSelector(phoneNumbers) {
+            const modal = document.getElementById('phoneSelectorModal');
+            const buttonsContainer = document.getElementById('phoneNumberButtons');
+            
+            buttonsContainer.innerHTML = '';
+            
+            phoneNumbers.forEach(number => {
+                const button = document.createElement('button');
+                button.className = 'phone-number-btn';
+                button.textContent = number;
+                button.onclick = () => {
+                    openWhatsApp(number);
+                    closePhoneSelector();
+                };
+                buttonsContainer.appendChild(button);
+            });
+            
+            modal.style.display = 'block';
+        }
+
+        function closePhoneSelector() {
+            document.getElementById('phoneSelectorModal').style.display = 'none';
+        }
+
+        // Fetch clients from API
+        async function fetchClients() {
+            try {
+                const response = await fetch('/api/clienti');
+                if (response.ok) {
+                    clients = await response.json();
+                    renderTable(clients);
+                }
+            } catch (error) {
+                console.error('Errore nel caricamento dei clienti:', error);
+            }
+        }
+
+        // Render table data
+        function renderTable(data) {
+            const tableBody = document.getElementById('clientsTableBody');
+            tableBody.innerHTML = '';
+
+            data.forEach(client => {
+                // Determina se mostrare il pulsante WhatsApp
+                const cellPhones = extractCellPhones(client.cellulare);
+                const whatsappButton = cellPhones.length > 0 ? 
+                    `<button class="whatsapp-btn" onclick="handleWhatsAppClick('${(client.cellulare || '').replace(/'/g, "\\'")}', event)" title="Apri WhatsApp">
+                        <svg viewBox="0 0 24 24" class="whatsapp-logo" fill="#25D366">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50002 12C3.50002 7.30558 7.3056 3.5 12 3.5C16.6944 3.5 20.5 7.30558 20.5 12C20.5 16.6944 16.6944 20.5 12 20.5C10.3278 20.5 8.77127 20.0182 7.45798 19.1861C7.21357 19.0313 6.91408 18.9899 6.63684 19.0726L3.75769 19.9319L4.84173 17.3953C4.96986 17.0955 4.94379 16.7521 4.77187 16.4751C3.9657 15.176 3.50002 13.6439 3.50002 12ZM12 1.5C6.20103 1.5 1.50002 6.20101 1.50002 12C1.50002 13.8381 1.97316 15.5683 2.80465 17.0727L1.08047 21.107C0.928048 21.4637 0.99561 21.8763 1.25382 22.1657C1.51203 22.4552 1.91432 22.5692 2.28599 22.4582L6.78541 21.1155C8.32245 21.9965 10.1037 22.5 12 22.5C17.799 22.5 22.5 17.799 22.5 12C22.5 6.20101 17.799 1.5 12 1.5ZM14.2925 14.1824L12.9783 15.1081C12.3628 14.7575 11.6823 14.2681 10.9997 13.5855C10.2901 12.8759 9.76402 12.1433 9.37612 11.4713L10.2113 10.7624C10.5697 10.4582 10.6678 9.94533 10.447 9.53028L9.38284 7.53028C9.23954 7.26097 8.98116 7.0718 8.68115 7.01654C8.38113 6.96129 8.07231 7.046 7.84247 7.24659L7.52696 7.52195C6.76823 8.18414 6.3195 9.2723 6.69141 10.3741C7.07698 11.5163 7.89983 13.314 9.58552 14.9997C11.3991 16.8133 13.2413 17.5275 14.3186 17.8049C15.1866 18.0283 16.008 17.7288 16.5868 17.2572L17.1783 16.7752C17.4313 16.5691 17.5678 16.2524 17.544 15.9269C17.5201 15.6014 17.3389 15.308 17.0585 15.1409L15.3802 14.1409C15.0412 13.939 14.6152 13.9552 14.2925 14.1824Z"/>
+                        </svg>
+                    </button>` : '';
+                
+                const row = `
+                    <tr>
+                        <td class="px-6 py-4 text-sm">
+                            ${client.descrizione || ''}
+                            <div class="action-icons">
+                                <button class="edit-comment" onclick="openUpdateClienteIframe(${client.id})">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 20h9" />
+                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                                    </svg>
+                                </button>
+                                <button class="delete-comment" onclick="deleteCliente(${client.id})">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm">${client.cognome || ''}</td>
+                        <td class="px-6 py-4 text-sm">${client.nome || ''}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <a href="tel:${client.cellulare || ''}" class="clickable">${client.cellulare || ''}</a>
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            ${whatsappButton}
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            <a href="mailto:${client.email || ''}" class="clickable">${client.email || ''}</a>
+                            ${client.email ? `
+                                <button class="email-btn" onclick="window.open('mailto:${client.email}', '_blank')" title="Invia email">
+                                    <svg viewBox="0 0 24 24" class="email-logo" fill="currentColor">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z"/>
+                                    </svg>
+                                </button>
+                            ` : ''}
+                        </td>
+                        <td class="px-6 py-4 text-sm">${client.indirizzo || ''}</td>
+                        <td class="px-6 py-4 text-sm">${client.codice_fiscale || ''}</td>
+                        <td class="px-6 py-4 text-sm">${client.piva || ''}</td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        // Open Iframe Modal
+        function openIframe(url) {
+            const iframeModal = document.getElementById('iframeModal');
+            const iframe = document.getElementById('iframeContent');
+            iframe.src = url;
+            iframeModal.style.display = "block";
+        }
+
+        // Close Iframe Modal
+        function closeIframe() {
+            const iframeModal = document.getElementById('iframeModal');
+            const iframe = document.getElementById('iframeContent');
+            iframe.src = '';
+            iframeModal.style.display = "none";
+            fetchClients(); // Aggiorna la tabella dopo l'aggiunta
+        }
+        function closeIframeFromChild() {
+            const modal = document.getElementById('iframeModal');
+            if (modal) {
+                modal.style.display = "none";
+                const iframe = modal.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = ""; // Reset del contenuto dell'iframe
+                }
+            }
+
+            // Ricarica la pagina principale per aggiornare i dati
+            if (window.location) {
+                window.location.reload();
+            }
+        }
+
+        // Open update cliente iframe
+        function openUpdateClienteIframe(clienteId) {
+            openIframe(`/update_cliente_iframe/${clienteId}`);
+        }
+
+        // Simplified delete functions
+        function deleteCliente(clienteId) {
+            selectedClientId = clienteId;
+            const modal = document.getElementById('confirmationModal');
+            modal.style.display = 'block';
+        }
+
+        function confirmDelete() {
+            const modal = document.getElementById('confirmationModal');
+            modal.style.display = 'none';
+            
+            if (!selectedClientId) return;
+            
+            fetch(`/delete_cliente/${selectedClientId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    fetchClients();
+                } else {
+                    alert('Errore durante l\'eliminazione del cliente');
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Errore durante l\'eliminazione del cliente');
+            });
+        }
+
+        function cancelDelete() {
+            const modal = document.getElementById('confirmationModal');
+            modal.style.display = 'none';
+            selectedClientId = null;
+        }
+
+        // Search clients
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = clients.filter(client =>
+                Object.values(client).some(value => value?.toString().toLowerCase().includes(query))
+            );
+            renderTable(filtered);
+        });
+
+        // Event listener for opening the add client iframe
+        document.getElementById('addClientBtn').addEventListener('click', () => {
+            openIframe('/aggiungi_cliente');
+        });
+
+        // Chiudi il popup WhatsApp quando si clicca fuori
+        document.getElementById('phoneSelectorModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('phoneSelectorModal')) {
+                closePhoneSelector();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchClients();
+            initializeTableHorizontalScrollbar();
+        });
+
+        // Funzione per inizializzare la barra di scorrimento orizzontale della tabella
+        function initializeTableHorizontalScrollbar() {
+            const tableContainer = document.getElementById('tableSlider');
+            const scrollbar = document.getElementById('tableHorizontalScrollbar');
+            const thumb = document.getElementById('tableHorizontalScrollbarThumb');
+            
+            if (!tableContainer || !scrollbar || !thumb) return;
+            
+            let isDragging = false;
+            let startX = 0;
+            let startScrollLeft = 0;
+            
+            function updateScrollbar() {
+                const containerWidth = tableContainer.clientWidth;
+                const scrollWidth = tableContainer.scrollWidth;
+                const scrollLeft = tableContainer.scrollLeft;
+                
+                // Mostra la barra se c'è contenuto che va oltre lo schermo
+                if (scrollWidth > containerWidth) {
+                    scrollbar.style.display = 'block';
+                    
+                    // Calcola la dimensione e posizione del thumb
+                    const thumbWidth = Math.max((containerWidth / scrollWidth) * scrollbar.clientWidth, 30);
+                    const thumbLeft = (scrollLeft / (scrollWidth - containerWidth)) * (scrollbar.clientWidth - thumbWidth);
+                    
+                    thumb.style.width = thumbWidth + 'px';
+                    thumb.style.transform = `translateX(${thumbLeft}px)`;
+                } else {
+                    scrollbar.style.display = 'none';
+                }
+            }
+            
+            // Event listeners per il container della tabella
+            tableContainer.addEventListener('scroll', updateScrollbar);
+            window.addEventListener('resize', updateScrollbar);
+            
+            // Event listeners per il thumb
+            thumb.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startScrollLeft = tableContainer.scrollLeft;
+                thumb.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - startX;
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const scrollRatio = deltaX / scrollbarRect.width;
+                const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;
+                
+                tableContainer.scrollLeft = startScrollLeft + (scrollRatio * maxScroll);
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    thumb.style.cursor = 'pointer';
+                }
+            });
+            
+            // Click sulla barra per saltare
+            scrollbar.addEventListener('click', (e) => {
+                if (e.target === thumb) return;
+                
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const clickX = e.clientX - scrollbarRect.left;
+                const scrollbarWidth = scrollbarRect.width;
+                const scrollRatio = clickX / scrollbarWidth;
+                const maxScroll = tableContainer.scrollWidth - tableContainer.clientWidth;
+                
+                tableContainer.scrollLeft = scrollRatio * maxScroll;
+            });
+            
+            // Inizializza
+            updateScrollbar();
+        }
+    </script>
+</body>
+</html>

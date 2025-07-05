@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consiglia Fornitori</title>
+    <style>
+        /* Styles for the navigation bar */
+        .top-nav {
+            background-color: #09f;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Styles for the loading spinner and progress */
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 50px); /* Adjusted for the nav bar */
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .progress-text {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+        /* Styles for the response content */
+        .response-container {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+        .response-summary {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .response-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .response-table th, .response-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        .response-table th {
+            background-color: #f2f2f2;
+        }
+        .add-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #09f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        body {
+            background-color: #fff; /* Set the background color to white */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="top-nav">
+        <div class="nav-title">Consiglia Fornitori</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="navigateBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Indietro
+            </button>
+        </div>
+    </div>
+    
+    <div class="spinner-container" id="spinnerContainer">
+        <div class="spinner"></div>
+        <div class="progress-text" id="progressText">Caricamento...</div>
+    </div>
+    <div id="responseContainer" style="display: none;" class="response-container">
+        <div id="responseSummary" class="response-summary"></div>
+        <div id="tablesContainer"></div>
+        <button id="addButton" class="add-button">Aggiungi Fornitori</button>
+    </div>
+    <script>
+        // Funzione per tornare indietro
+        function navigateBack() {
+            if (window.parent) {
+                // Se il contenuto è caricato in un iframe
+                window.parent.closeIframeFromChild();
+            } else {
+                // Se il contenuto è aperto in una nuova finestra
+                window.close();
+            }
+        }
+        
+        async function fetchResponse() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const workId = urlParams.get('work_id');
+            const note = urlParams.get('note');  // Ottieni le note dai parametri della query string
+            console.log(`Sending work_id: ${workId}, note: ${note}`);  // Debug: log the work_id and note being sent
+            
+            try {
+            const response = await fetch('/api/consiglia_fornitori/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ work_id: workId, note: note })  // Includi le note nel corpo della richiesta
+            });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+            return response.json();
+            } catch (error) {
+                console.error('Errore durante la richiesta:', error);
+                throw error;
+            }
+        }
+
+        function updateProgress(percent) {
+            const progressText = document.getElementById('progressText');
+            progressText.textContent = `Caricamento... ${Math.round(percent)}%`;
+        }
+
+        function replaceIdsWithNames(summary, suppliers) {
+            const allSuppliers = Object.values(suppliers).flat();
+            const supplierMap = allSuppliers.reduce((map, supplier) => {
+                map[supplier.idR] = supplier.Nome;
+                return map;
+            }, {});
+
+            return summary.replace(/\{(\d+)\}/g, (match, id) => {
+                return supplierMap[id] ? `"${supplierMap[id]}"` : match;
+            });
+        }
+
+        function updateAddButtonState() {
+            const addButton = document.getElementById('addButton');
+            const selectedSuppliers = document.querySelectorAll('.supplier-checkbox:checked');
+            addButton.disabled = selectedSuppliers.length === 0;
+        }
+
+        function displayResponse(data) {
+            const responseSummary = document.getElementById('responseSummary');
+            const tablesContainer = document.getElementById('tablesContainer');
+            const addButton = document.getElementById('addButton');
+
+            const suppliers = data.fornitori;
+            const formattedSummary = replaceIdsWithNames(data.riassunto, suppliers);
+            responseSummary.innerHTML = formattedSummary;
+
+            tablesContainer.innerHTML = '';
+
+            for (const [category, suppliersList] of Object.entries(suppliers)) {
+                const tableHeaders = `
+                    <tr>
+                        <th></th>
+                        <th>Nome</th>
+                        <th>Persone</th>
+                        <th>Telefono</th>
+                        <th>Specialità</th>
+                        <th>Città</th>
+                    </tr>
+                `;
+                const tableRows = suppliersList.map(supplier => `
+                    <tr>
+                        <td><input type="checkbox" class="supplier-checkbox" value="${supplier.id}"></td>
+                        <td>${supplier.Nome}</td>
+                        <td>${supplier.persone}</td>
+                        <td>${supplier.Telefono}</td>
+                        <td>${supplier.Specialità}</td>
+                        <td>${supplier.citta}</td>
+                    </tr>
+                `).join('');
+
+                const tableHtml = `
+                    <h3>${category}</h3>
+                    <table class="response-table">
+                        ${tableHeaders}
+                        ${tableRows}
+                    </table>
+                `;
+                tablesContainer.innerHTML += tableHtml;
+            }
+
+            document.querySelectorAll('.supplier-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', updateAddButtonState);
+            });
+
+            updateAddButtonState();
+
+            addButton.addEventListener('click', () => {
+                const selectedSuppliers = Array.from(document.querySelectorAll('.supplier-checkbox:checked'))
+                    .map(checkbox => checkbox.value)
+                    .join(',');
+                const workId = new URLSearchParams(window.location.search).get('work_id');
+                window.location.href = `/aggiungi_fornitori?work_id=${workId}&fornitori_id=${selectedSuppliers}`;
+            });
+        }
+
+        function showError(message, canRetry = true) {
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            const responseContainer = document.getElementById('responseContainer');
+            const responseSummary = document.getElementById('responseSummary');
+            const tablesContainer = document.getElementById('tablesContainer');
+            const addButton = document.getElementById('addButton');
+            
+            spinnerContainer.style.display = 'none';
+            responseContainer.style.display = 'block';
+            
+            responseSummary.innerHTML = `
+                <div style="color: #d32f2f; background: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                    <strong>❌ Errore:</strong> ${message}
+                </div>
+            `;
+            
+            tablesContainer.innerHTML = '';
+            
+            if (canRetry) {
+                tablesContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <button onclick="retryRequest()" style="
+                            background: #2196f3; 
+                            color: white; 
+                            border: none; 
+                            padding: 12px 24px; 
+                            border-radius: 5px; 
+                            cursor: pointer; 
+                            font-size: 16px;
+                        ">🔄 Riprova</button>
+                        <p style="margin-top: 10px; color: #666;">
+                            Clicca per riprovare la richiesta
+                        </p>
+                    </div>
+                `;
+            }
+            
+            addButton.style.display = 'none';
+        }
+
+        function retryRequest() {
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            const responseContainer = document.getElementById('responseContainer');
+            
+            responseContainer.style.display = 'none';
+            spinnerContainer.style.display = 'flex';
+            
+            document.getElementById('progressText').textContent = 'Caricamento...';
+            
+            showResponse();
+        }
+
+        async function showResponse() {
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            const responseContainer = document.getElementById('responseContainer');
+            const progressText = document.getElementById('progressText');
+
+            let responseReceived = false;
+            let retryCount = 0;
+            const maxRetries = 3;
+
+            // Simula progresso durante il caricamento
+            const progressInterval = setInterval(() => {
+                if (!responseReceived) {
+                    const fakeProgress = Math.min(90, (Date.now() - startTime) / 100);
+                    updateProgress(fakeProgress);
+                }
+            }, 500);
+
+            const startTime = Date.now();
+
+            const attemptRequest = async () => {
+                try {
+                    progressText.textContent = retryCount > 0 ? 
+                        `Tentativo ${retryCount + 1}/${maxRetries}...` : 
+                        'Analizzando richiesta...';
+                    
+                    const data = await fetchResponse();
+                    
+                responseReceived = true;
+                    clearInterval(progressInterval);
+                    
+                    if (data.status === 'error') {
+                        throw new Error(data.message || 'Errore sconosciuto dal server');
+                    }
+                    
+                    updateProgress(100);
+                    setTimeout(() => {
+                displayResponse(data);
+                spinnerContainer.style.display = 'none';
+                responseContainer.style.display = 'block';
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error(`Tentativo ${retryCount + 1} fallito:`, error);
+                    
+                    if (retryCount < maxRetries - 1) {
+                        retryCount++;
+                        progressText.textContent = `Errore: ritento tra 2 secondi...`;
+                        setTimeout(attemptRequest, 2000);
+                    } else {
+                        responseReceived = true;
+                        clearInterval(progressInterval);
+                        showError(
+                            `Impossibile caricare i suggerimenti dopo ${maxRetries} tentativi. ${error.message}`,
+                            true
+                        );
+            }
+                }
+            };
+
+            await attemptRequest();
+        }
+
+        showResponse();
+        
+        // Gestisci errori imprevisti durante il caricamento
+        window.addEventListener('error', function(event) {
+            console.error('Errore imprevisto:', event.error);
+            showError('Si è verificato un errore imprevisto. Riprova.', true);
+        });
+        
+        // Gestisci promise rejected non catturate
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Promise rejetta non gestita:', event.reason);
+            showError('Si è verificato un errore di rete. Riprova.', true);
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

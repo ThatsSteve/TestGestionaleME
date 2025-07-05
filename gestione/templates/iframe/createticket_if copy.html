@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema di Gestione Lavori</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .work-details, .comments {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .divider {
+            width: 1px;
+            background-color: #e0e0e0;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .comments {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .comments-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 80px;
+            padding-right: 10px;
+        }
+        .comment {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            position: relative;
+        }
+        .comment p {
+            margin-bottom: 5px;
+        }
+        .comment small {
+            color: #777;
+        }
+        .comment img {
+            max-width: 100%;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .comment-input-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .comment-input {
+            display: flex;
+            align-items: center;
+            background-color: #f0f2f5;
+            border-radius: 24px;
+            padding: 8px 16px;
+            gap: 8px;
+        }
+        .comment-input textarea {
+            flex: 1;
+            border: none;
+            background: transparent;
+            resize: none;
+            padding: 8px 0;
+            min-height: 24px;
+            max-height: 100px;
+            font-size: 14px;
+        }
+        .comment-input textarea:focus {
+            outline: none;
+        }
+        .comment-input button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .comment-input button:last-child {
+            background-color: #0095f6;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            color: white;
+        }
+        .comment-input button:hover {
+            background-color: #0095f6;
+            color: white;
+        }
+        .comment-input button svg {
+            width: 20px;
+            height: 20px;
+        }
+        .file-input {
+            display: none;
+        }
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+        }
+        #clienteSuggestions, #riferimentoSuggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        #clienteSuggestions div, #riferimentoSuggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #clienteSuggestions div:hover, #riferimentoSuggestions div:hover {
+            background-color: #f0f2f5;
+        }
+        #nuovoClienteForm {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .delete-comment {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .delete-comment {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .toggle-switch input {
+            display: none;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 25px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 21px;
+            width: 21px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #007bff;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(25px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="work-details">
+            <h1>Crea Nuovo Lavoro</h1>
+            <form id="work-form">
+                <div class="form-group" style="display: flex; align-items: center;">
+                    <label for="companyToggle" style="margin-right: 10px;">Società</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="companyToggle" name="companyToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" id="cliente" name="cliente" required>
+                    <input type="hidden" id="cliente_id" name="cliente_id">
+                    <div id="clienteSuggestions"></div>
+                </div>
+                <div id="nuovoClienteForm">
+                    <h3>Nuovo Cliente</h3>
+                    <div id="campiPersona">
+                        <div class="form-group">
+                            <label for="nuovoNome">Nome</label>
+                            <input type="text" id="nuovoNome" name="nuovoNome">
+                        </div>
+                        <div class="form-group">
+                            <label for="nuovoCognome">Cognome</label>
+                            <input type="text" id="nuovoCognome" name="nuovoCognome">
+                        </div>
+                    </div>
+                    <div id="campiSocieta" style="display: none;">
+                        <div class="form-group">
+                            <label for="nuovaPiva">P.IVA</label>
+                            <input type="text" id="nuovaPiva" name="nuovaPiva">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoEmail">Email</label>
+                        <input type="email" id="nuovoEmail" name="nuovoEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoCellulare">Cellulare</label>
+                        <input type="tel" id="nuovoCellulare" name="nuovoCellulare">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoIndirizzo">Indirizzo</label>
+                        <textarea id="nuovoIndirizzo" name="nuovoIndirizzo" rows="2"></textarea>
+                    </div>
+                    <button type="button" onclick="aggiungiNuovoCliente()">Aggiungi Nuovo Cliente</button>
+                </div>
+                <div id="nuovoRiferimentoForm" style="display: none;">
+                    <h3>Nuovo Riferimento</h3>
+                    <div class="form-group">
+                        <label for="nuovoRiferimentoNome">Nome</label>
+                        <input type="text" id="nuovoRiferimentoNome" name="nuovoRiferimentoNome">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoRiferimentoCognome">Cognome</label>
+                        <input type="text" id="nuovoRiferimentoCognome" name="nuovoRiferimentoCognome">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoRiferimentoTelefono">Telefono</label>
+                        <input type="tel" id="nuovoRiferimentoTelefono" name="nuovoRiferimentoTelefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuovoRiferimentoEmail">Email</label>
+                        <input type="email" id="nuovoRiferimentoEmail" name="nuovoRiferimentoEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="descrizione">Descrizione</label>
+                    <input type="text" id="descrizione" name="descrizione" required>
+                </div>
+                <div class="form-group">
+                    <label for="importo">Importo</label>
+                    <input type="number" id="importo" name="importo" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="fase">Fase</label>
+                    <select id="fase" name="fase">
+                        <option value="in_sospeso_per_valutazioni">In Sospeso per Valutazioni</option>
+                        <option value="nuovo_sopralluogo" selected>Nuovo Sopralluogo</option>
+                        <option value="da_preventivare">Da Preventivare</option>
+                        <option value="inviato_preventivo">Inviato Preventivo</option>
+                        <option value="confermato_da_eseguire">Confermato da Eseguire</option>
+                        <option value="in_corso">In Corso</option>
+                        <option value="da_fatturare">Da Fatturare</option>
+                        <option value="fatturate_da_pagare">Fatturato da Pagare</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="note">Note</label>
+                    <textarea id="note" name="note" rows="4"></textarea>
+                </div>
+                <button type="submit">Crea Lavoro</button>
+            </form>
+        </div>
+        <div class="divider"></div>
+        <div class="comments">
+            <h2>Commenti</h2>
+            <div id="commenti-list" class="comments-list"></div>
+            <div class="comment-input-container">
+                <div class="comment-input">
+                    <textarea 
+                        id="nuovo-commento" 
+                        placeholder="Scrivi un commento..."
+                        rows="1"
+                        oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"
+                    ></textarea>
+                    <input type="file" id="file-commento" class="file-input" accept="image/*" multiple>
+                    <button onclick="document.getElementById('file-commento').click()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                        </svg>
+                    </button>
+                    <button onclick="document.getElementById('foto-commento').click()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 2l3 3h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4l3-3zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+                        </svg>
+                    </button>
+                    <input type="file" id="foto-commento" class="file-input" accept="image/*" capture="environment" style="display: none;">
+                    <button onclick="aggiungiCommento()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="file-list" class="file-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tempComments = [];
+        let clienti = [];
+        let nuovoClienteDescrizione = null;
+
+        // Fetch clients when the page loads
+        fetchClienti();
+
+        function fetchClienti() {
+            const isCompany = document.getElementById('companyToggle').checked;
+            fetch(`/get_clients/?is_company=${isCompany}`)
+                .then(response => response.json())
+                .then(data => {
+                    clienti = data;
+                });
+        }
+
+        document.getElementById('cliente').addEventListener('input', function() {
+            const input = this.value.toLowerCase();
+            const isCompany = document.getElementById('companyToggle').checked;
+            const suggestions = document.getElementById('clienteSuggestions');
+            suggestions.innerHTML = '';
+
+            if (input.length > 0) {
+                const matchedClients = clienti.filter(cliente => 
+                    cliente.descrizione.toLowerCase().includes(input) &&
+                    cliente.societa === isCompany
+                );
+
+                matchedClients.forEach(cliente => {
+                    const div = document.createElement('div');
+                    div.textContent = cliente.descrizione;
+                    div.onclick = function() {
+                        document.getElementById('cliente').value = cliente.descrizione;
+                        document.getElementById('cliente_id').value = cliente.id;
+                        suggestions.innerHTML = '';
+                    };
+                    suggestions.appendChild(div);
+                });
+
+                if (matchedClients.length === 0) {
+                    const div = document.createElement('div');
+                    div.textContent = 'Nuovo cliente';
+                    div.onclick = function() {
+                        document.getElementById('nuovoClienteForm').style.display = 'block';
+                        suggestions.innerHTML = '';
+                    };
+                    suggestions.appendChild(div);
+                }
+            }
+        });
+
+        document.getElementById('companyToggle').addEventListener('change', function() {
+            fetchClienti();
+            document.getElementById('campiPersona').style.display = this.checked ? 'none' : 'block';
+            document.getElementById('campiSocieta').style.display = this.checked ? 'block' : 'none';
+            document.getElementById('nuovoRiferimentoForm').style.display = this.checked ? 'block' : 'none';
+        });
+
+        function aggiungiNuovoCliente() {
+            const isCompany = document.getElementById('companyToggle').checked;
+            const nuovoCliente = {
+                descrizione: document.getElementById('cliente').value,
+                email: document.getElementById('nuovoEmail').value,
+                cellulare: document.getElementById('nuovoCellulare').value,
+                indirizzo: document.getElementById('nuovoIndirizzo').value,
+                societa: isCompany
+            };
+
+            if (isCompany) {
+                nuovoCliente.piva = document.getElementById('nuovaPiva').value;
+            } else {
+                nuovoCliente.nome = document.getElementById('nuovoNome').value;
+                nuovoCliente.cognome = document.getElementById('nuovoCognome').value;
+            }
+
+            fetch('/api/add_cliente/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(nuovoCliente)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Nuovo cliente aggiunto con successo');
+                    nuovoClienteDescrizione = nuovoCliente.descrizione;
+                    document.getElementById('nuovoClienteForm').style.display = 'none';
+                    fetchClienti();  // Aggiorna la lista dei clienti
+                } else {
+                    alert('Errore durante l\'aggiunta del nuovo cliente');
+                }
+            });
+        }
+
+        async function aggiungiNuovoRiferimento() {
+            const nuovoRiferimentoNome = document.getElementById('nuovoRiferimentoNome').value;
+            const nuovoRiferimentoCognome = document.getElementById('nuovoRiferimentoCognome').value;
+            const nuovoRiferimentoTelefono = document.getElementById('nuovoRiferimentoTelefono').value;
+            const nuovoRiferimentoEmail = document.getElementById('nuovoRiferimentoEmail').value;
+
+            if (!nuovoRiferimentoNome && !nuovoRiferimentoCognome && !nuovoRiferimentoTelefono && !nuovoRiferimentoEmail) {
+                return null;
+            }
+
+            const nuovoRiferimento = {
+                nome: nuovoRiferimentoNome,
+                cognome: nuovoRiferimentoCognome,
+                telefono: nuovoRiferimentoTelefono,
+                email: nuovoRiferimentoEmail
+            };
+
+            const response = await fetch('/api/add_riferimento/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(nuovoRiferimento)
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                return data.riferimento_id;
+            } else {
+                alert('Errore durante l\'aggiunta del nuovo riferimento');
+                return null;
+            }
+        }
+
+        async function aggiungiCommento() {
+            const commento = document.getElementById('nuovo-commento').value;
+            const fileInput = document.getElementById('file-commento');
+            const files = fileInput.files;
+
+            if (commento.trim() === '' && files.length === 0) return;
+
+            try {
+                // Send the first comment with the first attachment (if any)
+                const firstAttachment = files.length > 0 ? await uploadFile(files[0]) : null;
+                await sendComment(commento, firstAttachment);
+
+                // Send additional comments for remaining attachments
+                for (let i = 1; i < files.length; i++) {
+                    const attachmentUrl = await uploadFile(files[i]);
+                    await sendComment('', attachmentUrl);
+                }
+
+                // Clear input fields and file list
+                document.getElementById('nuovo-commento').value = '';
+                fileInput.value = '';
+                document.getElementById('file-list').innerHTML = '';
+                
+                // Reset textarea height
+                document.getElementById('nuovo-commento').style.height = '';
+
+                // Reload comments
+                renderCommenti();
+            } catch (error) {
+                console.error('Errore durante l\'aggiunta del commento:', error);
+                alert('Si è verificato un errore durante l\'aggiunta del commento.');
+            }
+        }
+
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const uploadResponse = await fetch('/upload_attachment/', {
+                    method: 'POST',
+                    body: formData
+                });
+                const uploadData = await uploadResponse.json();
+                if (uploadData.status === 'success') {
+                    return uploadData.file_url;
+                } else {
+                    throw new Error(`Errore durante il caricamento del file ${file.name}.`);
+                }
+            } catch (error) {
+                console.error('Errore durante il caricamento del file:', error);
+                throw error;
+            }
+        }
+
+        async function sendComment(content, attachment) {
+            tempComments.push({
+                content: content,
+                attachment: attachment
+            });
+            renderCommenti();
+        }
+
+        document.getElementById('file-commento').addEventListener('change', function() {
+            updateFileList(this.files);
+        });
+
+        function updateFileList(files) {
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const p = document.createElement('p');
+                    p.textContent = `File selezionato: ${files[i].name}`;
+                    fileList.appendChild(p);
+                }
+            }
+        }
+
+        function renderCommenti() {
+            const commentiList = document.getElementById('commenti-list');
+            commentiList.innerHTML = '';
+
+            tempComments.forEach((comment, index) => {
+                const commentoDiv = document.createElement('div');
+                commentoDiv.classList.add('comment');
+                const isImage = comment.attachment && comment.attachment.match(/\.(jpeg|jpg|png|gif)$/i);
+                commentoDiv.innerHTML = `
+                    <p>${comment.content}</p>
+                    ${comment.attachment ? (isImage ? `<img src="/${comment.attachment}" alt="Allegato" onclick="showFullscreen(this.src)">` : `<a href="/${comment.attachment}" target="_blank">Allegato</a>`) : ''}
+                    <button class="delete-comment" onclick="deleteComment(${index})">
+                        ×
+                    </button>
+                `;
+                commentiList.appendChild(commentoDiv);
+            });
+
+            // Scroll to bottom after adding new comment
+            commentiList.scrollTop = commentiList.scrollHeight;
+        }
+
+        function deleteComment(index) {
+            tempComments.splice(index, 1);
+            renderCommenti();
+        }
+
+        document.getElementById('nuovo-commento').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                aggiungiCommento(); 
+            }
+        });
+
+        document.getElementById('work-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            let cliente_id = document.getElementById('cliente_id').value;
+            const clienteDescrizione = document.getElementById('cliente').value;
+
+            if (!cliente_id && nuovoClienteDescrizione === clienteDescrizione) {
+                const nuovoCliente = clienti.find(c => c.descrizione === clienteDescrizione);
+                if (nuovoCliente) {
+                    cliente_id = nuovoCliente.id;
+                } else {
+                    alert('Errore: Impossibile trovare il nuovo cliente. Riprova.');
+                    return;
+                }
+            }
+
+            const descrizione = document.getElementById('descrizione').value;
+            const importo = document.getElementById('importo').value;
+            const note = document.getElementById('note').value;
+            const fase = document.getElementById('fase').value; 
+            let riferimento_id = null;
+
+            if (document.getElementById('companyToggle').checked) {
+                riferimento_id = await aggiungiNuovoRiferimento();
+            }
+
+            const workData = {
+                cliente_id,
+                descrizione,
+                importo,
+                note,
+                fase
+            };
+
+            if (riferimento_id) {
+                workData.riferimento_id = riferimento_id;
+            }
+
+            try {
+                const response = await fetch('/add_work/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(workData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Errore durante la creazione del lavoro.');
+                }
+
+                const data = await response.json();
+                const workId = data.work_id;
+
+                for (const comment of tempComments) {
+                    await fetch('/add_comment/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            work_id: workId,
+                            content: comment.content,
+                            attachment: comment.attachment
+                        }),
+                    });
+                }
+
+                // Chiudi l'iframe o il modal
+                if (window.parent) {
+                    // Se il contenuto è caricato in un iframe
+                    window.parent.closeIframeFromChild();
+                } else {
+                    // Se il contenuto è aperto in una nuova finestra
+                    window.close();
+                }
+
+            } catch (error) {
+                console.error('Errore durante la creazione del lavoro:', error);
+                alert('Si è verificato un errore.');
+            }
+        });
+
+        function showFullscreen(src) {
+            const fullscreenDiv = document.createElement('div');
+            fullscreenDiv.style.position = 'fixed';
+            fullscreenDiv.style.top = '0';
+            fullscreenDiv.style.left = '0';
+            fullscreenDiv.style.width = '100%';
+            fullscreenDiv.style.height = '100%';
+            fullscreenDiv.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            fullscreenDiv.style.display = 'flex';
+            fullscreenDiv.style.justifyContent = 'center';
+            fullscreenDiv.style.alignItems = 'center';
+            fullscreenDiv.style.zIndex = '1000';
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.maxWidth = '90%';
+            img.style.maxHeight = '90%';
+            img.style.objectFit = 'contain';
+
+            fullscreenDiv.appendChild(img);
+            fullscreenDiv.onclick = () => document.body.removeChild(fullscreenDiv);
+            document.body.appendChild(fullscreenDiv);
+        }
+
+        // Drag and drop functionality
+        const dropZone = document.querySelector('.comments');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            document.getElementById('file-commento').files = dt.files;
+            aggiungiCommento();
+        }
+
+        // Add auto-resize functionality for textarea
+        document.getElementById('nuovo-commento').addEventListener('input', function() {
+            this.style.height = '';
+            this.style.height = this.scrollHeight + 'px';
+        });
+
+        document.getElementById('foto-commento').addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                // Crea un FormData per caricare il file
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Esegui il caricamento del file tramite fetch
+                fetch('/upload_attachment/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Aggiungi il commento con l'allegato
+                        const attachmentUrl = data.file_url;
+                        aggiungiCommentoConAllegato(attachmentUrl);
+                    } else {
+                        alert('Errore durante il caricamento della foto.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante il caricamento della foto:', error);
+                });
+            }
+        });
+
+        function aggiungiCommentoConAllegato(attachmentUrl) {
+            const commento = document.getElementById('nuovo-commento').value;
+
+            fetch('/add_comment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    work_id: workData.id,
+                    content: commento || 'Foto caricata',
+                    attachment: attachmentUrl
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('nuovo-commento').value = '';
+                    document.getElementById('foto-commento').value = '';
+                    caricaCommenti(); // Ricarica i commenti
+                } else {
+                    alert('Errore durante l\'invio del commento con foto.');
+                }
+            });
+        }
+        
+        // ===== SINCRONIZZAZIONE NOMI COLONNE =====
+        
+        let stageNames = {};
+        
+        // Carica i nomi personalizzati delle colonne
+        async function loadStageNames() {
+            try {
+                const response = await fetch('/api/get_stage_names/');
+                if (response.ok) {
+                    stageNames = await response.json();
+                    updateStageNamesInUI();
+                }
+            } catch (error) {
+                console.error('Errore nel caricamento dei nomi delle colonne:', error);
+            }
+        }
+        
+        // Aggiorna i nomi delle colonne nell'interfaccia
+        function updateStageNamesInUI() {
+            // Aggiorna il select della fase
+            const faseSelect = document.getElementById('fase');
+            if (faseSelect) {
+                Array.from(faseSelect.options).forEach(option => {
+                    if (stageNames[option.value]) {
+                        option.textContent = stageNames[option.value];
+                    }
+                });
+            }
+        }
+        
+        // Listener per aggiornamenti in tempo reale dal parent
+        function listenForStageNameUpdates() {
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'stageNameUpdated') {
+                    // Aggiorna i nomi locali
+                    stageNames[event.data.stageKey] = event.data.newName;
+                    updateStageNamesInUI();
+                }
+            });
+        }
+        
+        // Inizializza al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStageNames();
+            listenForStageNameUpdates();
+        });
+    </script>
+</body>
+</html>
+

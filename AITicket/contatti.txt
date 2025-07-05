@@ -1,0 +1,2760 @@
+[
+    {
+
+
+        "Nome": "Barbazza Tecnoimpianti Group Srl",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 583 0291",
+        "Sito": "barbazzatecnoimpianti.it",
+        "Creato": "13/03/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03364110274",
+        "Specialità": "",
+        "citta": "Gardigiano di Scorzè"
+    },
+    {
+
+
+        "Nome": "MB Service s.r.l. facciate ventilate",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 035 24045",
+        "Sito": "www.mbservicedighezzi.it",
+        "Creato": "15/01/2024",
+        "email": "",
+        "Categoria": "Serramenti e arredo interni",
+        "PIVA": "04699170165",
+        "Specialità": "Chiavi in mano",
+        "citta": "Albano Sant'Alessandro Bergamo"
+    },
+    {
+
+
+        "Nome": "GI Costruzioni s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0421 632483",
+        "Sito": "www.gicostruzionisrl.it",
+        "Creato": "15/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04270970272",
+        "Specialità": "Impresa edile",
+        "citta": "Eraclea"
+    },
+    {
+
+
+        "Nome": "FO.RO. s.r.l. di Gastone Folllin",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 635125",
+        "Sito": "",
+        "Creato": "14/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "03297070272",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Marco Pittarello",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 348 065 9491",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Padova"
+    },
+    {
+
+
+        "Nome": "Caberlotto Cera",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 335 470 033",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Menon Costruzioni s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 328 639 4634",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "02719030245",
+        "Specialità": "Rifacimento tetti ristrutturazioni costruzioni civili industriali",
+        "citta": "Codevigo Padova"
+    },
+    {
+
+
+        "Nome": "Ecodomus",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 921616",
+        "Sito": "https://ecodomus-ve.com/contattihtml",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "03071550275",
+        "Specialità": "Restauri costruzione",
+        "citta": "Marghera"
+    },
+    {
+
+
+        "Nome": "Impresa edile Sarto e Gobbato",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 347 669 7293",
+        "Sito": "www.saedilesartoegobbato.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "02987800279",
+        "Specialità": "Media per ampliamenti",
+        "citta": "Campolongo Maggiore"
+    },
+    {
+
+
+        "Nome": "GR general restauri s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 347 888 3971",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "03811350275",
+        "Specialità": "Isolamenti cappotti dipinture cartonassi",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Nalon s.r.l. Gestione impianti tecnologici",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 563 0875",
+        "Sito": "www.nalonsrl.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03643690278",
+        "Specialità": "Impianti molto grossi",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Dalla Torre impianti s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0438 794781",
+        "Sito": "www.dallatorreimpianti.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03840980266",
+        "Specialità": "impianti innovativi e alimentare. Tecnologie avanzate impianti per il futuro",
+        "citta": "Codognè di Treviso"
+    },
+    {
+
+
+        "Nome": "RGV Restauri generali veneziani s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 523 3454",
+        "Sito": "www.rgvsrl.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04340200270",
+        "Specialità": "Grossi restauri",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Bellardo Marco",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0422 383257",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "02394920264",
+        "Specialità": "Generico",
+        "citta": "Casier Treviso"
+    },
+    {
+
+
+        "Nome": "Cgs service impresa edile",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 379 178 7622",
+        "Sito": "www.cgsservice.it",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Generale",
+        "citta": "Mestre Venezia"
+    },
+    {
+
+
+        "Nome": "Piemme restauri",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 333 245 0768",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "0425900277",
+        "Specialità": "Costruzioni ristrutturazioni",
+        "citta": "Campolongo Maggiore"
+    },
+    {
+
+
+        "Nome": "Il Gazebo",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 338 165 4713",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04539670267",
+        "Specialità": "Costruzioni restauri dipinture",
+        "citta": "Zero Branco Treviso"
+    },
+    {
+
+
+        "Nome": "CO.RE.MAR s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 340 102 2512",
+        "Sito": "www.coremarssrl.it",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Costruzioni edili generale",
+        "PIVA": "02564590244",
+        "Specialità": "Muratore",
+        "citta": "Sarcedo Vicenza"
+    },
+    {
+
+
+        "Nome": "Benetti costruzioni sic",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0421 241069",
+        "Sito": "www.costruzionibenetti.it",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "00364800276",
+        "Specialità": "Costruttori",
+        "citta": "Bando Scudelle Venezia"
+    },
+    {
+
+
+        "Nome": "Impresa costruttori Trevisan",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 338 403 0317",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "00364800276",
+        "Specialità": "Costruttori",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Impresa Alba",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 348 220 0145",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04090960263",
+        "Specialità": "Costruire, ristruttura isola",
+        "citta": "Paese Treviso"
+    },
+    {
+
+
+        "Nome": "Zago s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0422 788758",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "04465070268",
+        "Specialità": "",
+        "citta": "Casale Sul Sile Treviso"
+    },
+    {
+
+
+        "Nome": "Davide Gibin Elettroveneta",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 338 487 3539",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Building Technologies s.r.l",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 049 933 6451",
+        "Sito": "www.bezzegato.it",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04066350283",
+        "Specialità": "",
+        "citta": "Borgoricco Padova"
+    },
+    {
+
+
+        "Nome": "Grandi opere costruzioni generali",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 049 579 8703",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04398530263",
+        "Specialità": "",
+        "citta": "Padova"
+    },
+    {
+
+
+        "Nome": "Nuova Vetreria Trevisan s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 360 468 129",
+        "Sito": "",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Serramenti",
+        "PIVA": "04329720272",
+        "Specialità": "",
+        "citta": "Marghera Venezia"
+    },
+    {
+
+
+        "Nome": "Rigo Gabriele",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 546 1794",
+        "Sito": "www.rigogabriele.it",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Serramenti",
+        "PIVA": "03103820274",
+        "Specialità": "Serramenti in pvc, alluminio, legno e acciaio",
+        "citta": "Olmo di Martellago"
+    },
+    {
+
+
+        "Nome": "Ecotherm",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 030 358 1800",
+        "Sito": "https://ecotherm.it/contatti/",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Trattamento acqua aria",
+        "PIVA": "01293610174",
+        "Specialità": "Trattamento aria",
+        "citta": "Brescia"
+    },
+    {
+
+
+        "Nome": "Edilit Costruzioni s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 514 0274",
+        "Sito": "",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "02810900270",
+        "Specialità": "",
+        "citta": "Campagna Lupia Venezia"
+    },
+    {
+
+
+        "Nome": "Proedile ponteggi",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 335 547 2803",
+        "Sito": "www.proedileponteggi.it",
+        "Creato": "03/01/2024",
+        "email": "",
+        "Categoria": "Ponteggi",
+        "PIVA": "02789040249",
+        "Specialità": "Ponteggi a Venezia",
+        "citta": "Malo Vicenza"
+    },
+    {
+
+
+        "Nome": "Canziani Falegnameria",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 335 657 2520",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Falegname",
+        "PIVA": "00892460270",
+        "Specialità": "Cucine su misura",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Longato Luciano & C. s.n.c.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 348 271 4593",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Falegnami",
+        "PIVA": "02496510260",
+        "Specialità": "",
+        "citta": "Monastier Treviso"
+    },
+    {
+
+
+        "Nome": "Replast Group s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0432 668762",
+        "Sito": "www.replastgroup.com",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "02886960307",
+        "Specialità": "Ringhiere parapetti",
+        "citta": "Remanzacco Udine"
+    },
+    {
+
+
+        "Nome": "Carollo Serramenti s.n.c.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 0422 488090",
+        "Sito": "www.gruppocarollo.com",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "00855880266",
+        "Specialità": "Fornitore di finestre",
+        "citta": "Zero Branco Treviso"
+    },
+    {
+
+
+        "Nome": "Officine Cavalletto s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 930994",
+        "Sito": "www.officinecavalletto.it",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "00002130276",
+        "Specialità": "Lavorazioni personalizzate",
+        "citta": "Marghera"
+    },
+    {
+
+
+        "Nome": "Fabio Frigotech",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 335 562 2854",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigoristi",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Isolcolor s.r.l.",
+        "NDipendenti": "oltre 9",
+        "Telefono": "+39 041 435 5767",
+        "Sito": "www.isolcolor.it",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "03608900274",
+        "Specialità": "Intendi interni cappotti, isolamenti, cartongesso",
+        "citta": "Mirano"
+    },
+    {
+
+
+        "Nome": "Annoè Claudio",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 817 4693",
+        "Sito": "",
+        "Creato": "16/10/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "02140250271",
+        "Specialità": "Allacciamenti, installazioni, impianti di fognatura pvc. Espurgo pozzi neri",
+        "citta": "Maerne di Martellago (Ve)"
+    },
+    {
+
+
+        "Nome": "Hoti fratello Fiore",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 389 284 5404",
+        "Sito": "",
+        "Creato": "04/04/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Mazzer Lattonerie",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 380 302 9087",
+        "Sito": "",
+        "Creato": "13/02/2024",
+        "email": "",
+        "Categoria": "Grondaie",
+        "PIVA": "04299490260",
+        "Specialità": "Grondaie Coperture Impermeabilizzazioni Bonifica amianto",
+        "citta": "Pianzano di Godega di Sant' Urbano (TV)"
+    },
+    {
+
+
+        "Nome": "Impresa edile De Rossi Lucio",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 041 614310",
+        "Sito": "",
+        "Creato": "31/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "02791320274",
+        "Specialità": "",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Fratelli Simoni s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 041 456 9160",
+        "Sito": "www.fratellisimoni.it",
+        "Creato": "18/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "00374990273",
+        "Specialità": "Ristrutturazioni chiavi in mano arredo bagno",
+        "citta": "Marcon Venezia"
+    },
+    {
+
+
+        "Nome": "Mike Pamio",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 535 7049",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "01691720468",
+        "Specialità": "",
+        "citta": "Salzano"
+    },
+    {
+
+
+        "Nome": "Elvis Pamio",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 684 4312",
+        "Sito": "www.elvispamio.com",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Salzano"
+    },
+    {
+
+
+        "Nome": "Nicola Sive Michele Serenissima impianti",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 338 871 8656",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "04460950274",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Viktor",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 388 569 2945",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Ristrutturazioni interne",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Kelmendi di Kelmendi Adnon Adi amico Matteo",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 388 106 9559",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico Posatore Muratore",
+        "PIVA": "04526100278",
+        "Specialità": "Ristrutturazioni Cartongesso, piccole ristrutturazioni, bagni",
+        "citta": "Marcon"
+    },
+    {
+
+
+        "Nome": "Costruendo di Berto Cristian",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 588 2455",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04562250276",
+        "Specialità": "Piccole ristrutturazioni e piscine",
+        "citta": "Pianiga"
+    },
+    {
+
+
+        "Nome": "Prorim progettazione ristrutturazione impiantistica",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 320 229 9404",
+        "Sito": "www.prorim.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico Elettricista",
+        "PIVA": "",
+        "Specialità": "Medio piccolo elettrico idrico",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Luca Turco",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 340 467 4817",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Lu.Ma Impianti s.n.c.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 347 603 2084",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "03460060274",
+        "Specialità": "",
+        "citta": "Lido Venezia"
+    },
+    {
+
+
+        "Nome": "Impiantistica D&D",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 041 303 2193",
+        "Sito": "www.impiantisticaded.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03778970271",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Impel Servizi s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 348 060 6241",
+        "Sito": "www.impelservizi.com",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "04309420273",
+        "Specialità": "Impianti generali",
+        "citta": "Martellago"
+    },
+    {
+
+
+        "Nome": "Patron impianti s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 049 556 4133",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico Elettricista",
+        "PIVA": "00261220289",
+        "Specialità": "Impianti elettricisti misti medio grossi",
+        "citta": "Campodarsego Padova"
+    },
+    {
+
+
+        "Nome": "Onix s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 338 920 4617",
+        "Sito": "www.onix.srl",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Impiantisti idraulico elettricista fotovoltaico caldaista",
+        "PIVA": "04500670270",
+        "Specialità": "idraulico elettricista fotovoltaico caldaista",
+        "citta": "Marghera Venezia"
+    },
+    {
+
+
+        "Nome": "Gig impiantistica di Galante Giuliano",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 346 803 0544",
+        "Sito": "www.gigimpiantistica.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "04741610275",
+        "Specialità": "Generico",
+        "citta": "Gazzera Venezia"
+    },
+    {
+
+
+        "Nome": "Andrea Faco",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 328 228 0428",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Generico",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Dem restauri",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 340 642 7712",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04605620279",
+        "Specialità": "Factotum piccoli",
+        "citta": "Mestre Venezia"
+    },
+    {
+
+
+        "Nome": "Opera edile",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 339 418 4864",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04791930276",
+        "Specialità": "Costruttore",
+        "citta": "Noale"
+    },
+    {
+
+
+        "Nome": "De Marchi Mirco",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 328 467 7137",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "03726220282",
+        "Specialità": "Costruttore medio",
+        "citta": "Corte di Piove di Sacco Padova"
+    },
+    {
+
+
+        "Nome": "Manutenzioni per la casa di Decossi Mario e Moreno",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 338 773 5871",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Chiavi in mano",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Lavori Edili Idraulica",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 333 310 3141",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Chiavi in mano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Italian Buildings renovations s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Chiavi in mano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Manutenzioni per la casa di De Rossi Marino e Moreno",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 338 773 5871",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Chiavi in mano",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Artiom",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 327 281 1917",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Capottista",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Termoidraulica 2M snc Impianti di Chiarin Massimo",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 041 634026",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "03750440277",
+        "Specialità": "",
+        "citta": "Favaro"
+    },
+    {
+
+
+        "Nome": "Emanuele Frison 100% Ergonsì",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 328 693 1992",
+        "Sito": "www.ergonsì.com",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "04473900274",
+        "Specialità": "",
+        "citta": "Spinea"
+    },
+    {
+
+
+        "Nome": "Elettricista Treviso",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 392 978 6331",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Treviso"
+    },
+    {
+
+
+        "Nome": "Andrea Elettrotermica Veneta",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 608 3014",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Termoidraulica Danesin",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 333 774 7941",
+        "Sito": "www.termoidraulicadanesin.it",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Trivignano Venezia"
+    },
+    {
+
+
+        "Nome": "Pino KF Service di Kreutzer Giuseppe",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 329 152 6695",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03732000272",
+        "Specialità": "",
+        "citta": "Marghera"
+    },
+    {
+
+
+        "Nome": "Matteo Farinelli bar",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 348 383 3888",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "I.N.G. Multiservice s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 328 728 9166",
+        "Sito": "",
+        "Creato": "03/01/2024",
+        "email": "",
+        "Categoria": "Disinfestazioni",
+        "PIVA": "04638500274",
+        "Specialità": "Servizi derattizzazione giardinaggio",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Officina Spolaor",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 041 595 2187",
+        "Sito": "https://www.officinaspolaor.it/",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "02592760272",
+        "Specialità": "Lavorazione dei metalli",
+        "citta": "Marcon"
+    },
+    {
+
+
+        "Nome": "Frigocold s.r.l.",
+        "NDipendenti": "3-9",
+        "Telefono": "",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigoristi",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Frigotermica uno s.n.c. di Giovanni Caberlotto",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 335 651 0069",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigorista idraulico elletricista",
+        "PIVA": "02914270273",
+        "Specialità": "general contratto",
+        "citta": "mestre"
+    },
+    {
+
+
+        "Nome": "Federico Bar Vittoria",
+        "NDipendenti": "3-9",
+        "Telefono": "+39 340 080 9269",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigorista",
+        "PIVA": "",
+        "Specialità": "frigoriferi industriali",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Impresa Michielan",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 041 584 0820",
+        "Sito": "impresamichielan.com",
+        "Creato": "30/06/2024",
+        "email": "",
+        "Categoria": "Pittore edile",
+        "PIVA": "04687550279",
+        "Specialità": "Tetti, cappotto, pitture i/e, piattaforme aeree",
+        "citta": "Scorzè"
+    },
+    {
+
+
+        "Nome": "Cardin Costruzioni snc Di Cardin Paolo e C",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 333 980 1193",
+        "Sito": "",
+        "Creato": "21/03/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "02673520272",
+        "Specialità": "",
+        "citta": "Marcon"
+    },
+    {
+
+
+        "Nome": "Mazzuccato Massimo",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 041 595 2924",
+        "Sito": "www.mazzuccatomassimo.it",
+        "Creato": "28/02/2024",
+        "email": "",
+        "Categoria": "Caldaie",
+        "PIVA": "02984170270",
+        "Specialità": "Baxi-Therm-Atag-Unical-Pineco",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Luca Boldrin Lucia Tutelart",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 329 492 8877",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Mobili Bellato di Bellato Michele",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 339 123 2832",
+        "Sito": "www.mobilibellato.it",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Falegname",
+        "PIVA": "03078830274",
+        "Specialità": "Strutturato",
+        "citta": "Spinea"
+    },
+    {
+
+
+        "Nome": "Officina Fabbrile di Belliato Francesco",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 393 927 2660",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "03109900278",
+        "Specialità": "",
+        "citta": "Chirignago"
+    },
+    {
+
+
+        "Nome": "Nicola",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 335 804 9732",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigorista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Ferrucci",
+        "NDipendenti": "1-3",
+        "Telefono": "+39 347 082 3093",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Frigoristi",
+        "PIVA": "",
+        "Specialità": "impiantisti generico",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Sea Restauri",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 606 6757",
+        "Sito": "",
+        "Creato": "24/07/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Impresa Edile Architre srl",
+        "NDipendenti": "1",
+        "Telefono": "+39 338 709 5597",
+        "Sito": "",
+        "Creato": "11/06/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04142270273",
+        "Specialità": "Posa pavimenti, dipinture, impianti elettrici, chiavi in mano",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Artigiani edili sas di Denis Bortolato e Ivan Roncato",
+        "NDipendenti": "1",
+        "Telefono": "+39 389 897 0650",
+        "Sito": "",
+        "Creato": "01/03/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04586150270",
+        "Specialità": "",
+        "citta": "Noale"
+    },
+    {
+
+
+        "Nome": "Facchin Adriano",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 651 0251",
+        "Sito": "",
+        "Creato": "15/02/2024",
+        "email": "",
+        "Categoria": "Falegname",
+        "PIVA": "0334540278",
+        "Specialità": "",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Dorian",
+        "NDipendenti": "1",
+        "Telefono": "+39 328 806 8119",
+        "Sito": "",
+        "Creato": "01/02/2024",
+        "email": "",
+        "Categoria": "Pittore, sgomberi, pulizie vetri",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "M.C. di Moretto Claudio",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 584 4525",
+        "Sito": "",
+        "Creato": "01/02/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "01385540339",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Microclima impianti di Mauro Ceccon",
+        "NDipendenti": "1",
+        "Telefono": "+39 349 515 4050",
+        "Sito": "",
+        "Creato": "25/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03451250272",
+        "Specialità": "Impianti idraulici, riscaldamento e condizionamento",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Mario Ciprian",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 743 2250",
+        "Sito": "",
+        "Creato": "15/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Bagni",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Cecchinato Michele",
+        "NDipendenti": "1",
+        "Telefono": "+39 041 456 7755",
+        "Sito": "",
+        "Creato": "14/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "03970540963",
+        "Specialità": "",
+        "citta": "Marcon"
+    },
+    {
+
+
+        "Nome": "Gianpietro Idro Luca socio",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 705 9683",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Pompe calore idriche",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "ElettroClick",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 537 5758",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "04657920270",
+        "Specialità": "",
+        "citta": "Mira"
+    },
+    {
+
+
+        "Nome": "DM impianti",
+        "NDipendenti": "1",
+        "Telefono": "+3939295984126",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Scanferlato",
+        "NDipendenti": "1",
+        "Telefono": "+39 041 981321",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "03216890271",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Ayad Abdelhadi",
+        "NDipendenti": "1",
+        "Telefono": "+39 380 146 4363",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "Pannelli solari",
+        "citta": "Padova"
+    },
+    {
+
+
+        "Nome": "Paolo di Livio",
+        "NDipendenti": "1",
+        "Telefono": "+39 324 607 2382",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Generico",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "SC impianti",
+        "NDipendenti": "1",
+        "Telefono": "+39 041 482925",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico Elettricista",
+        "PIVA": "",
+        "Specialità": "Impianti ellet idra",
+        "citta": "Salzano"
+    },
+    {
+
+
+        "Nome": "UC impianti",
+        "NDipendenti": "1",
+        "Telefono": "+39 327 905 2843",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "04513360273",
+        "Specialità": "Impianti elettrici idraulici",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Preorim",
+        "NDipendenti": "1",
+        "Telefono": "",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Impianti",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Termoclima",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 760 8347",
+        "Sito": "www.termoidraulicatreviso.it",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "04132600265",
+        "Specialità": "Generico",
+        "citta": "Treviso"
+    },
+    {
+
+
+        "Nome": "Poseidon impianti",
+        "NDipendenti": "1",
+        "Telefono": "+39 348 656 5863",
+        "Sito": "",
+        "Creato": "12/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03028510273",
+        "Specialità": "Generico",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Daniel elettricista Seila",
+        "NDipendenti": "1",
+        "Telefono": "+39 346 417 9325",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "Cancelli automatismo",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Piast. Renato Cadore",
+        "NDipendenti": "1",
+        "Telefono": "+39 338 542 2811",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "Artigiano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Gabriele Piast Container",
+        "NDipendenti": "1",
+        "Telefono": "+39 328 764 9382",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "Artigiano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Pittore Ivan Edilarte Venezia",
+        "NDipendenti": "1",
+        "Telefono": "+39 348 779 3245",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "04364740276",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Piast. Matteo",
+        "NDipendenti": "1",
+        "Telefono": "+39 338 566 0789",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Maurizio Martonel Piastrellista Luccarda",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 510 0975",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Gianni Piast.",
+        "NDipendenti": "1",
+        "Telefono": "+39 336 791 507",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Carmine Capace Renato Piast",
+        "NDipendenti": "1",
+        "Telefono": "+39 335 245 719",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "00792630279",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Roberto Gianni",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 458 4527",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Luca",
+        "NDipendenti": "1",
+        "Telefono": "+39 334 757 9067",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Alessandro Pittarello",
+        "NDipendenti": "1",
+        "Telefono": "+39 339 243 3983",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Fabio",
+        "NDipendenti": "1",
+        "Telefono": "+39 328 822 6676",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Denis Serai Ass",
+        "NDipendenti": "1",
+        "Telefono": "+39 340 376 7288",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Lelar di Cagnin Andrea Giorgio",
+        "NDipendenti": "1",
+        "Telefono": "+39 348 312 0739",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03812970279",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Samuele Sottana",
+        "NDipendenti": "1",
+        "Telefono": "+39 338 780 3871",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "04441250281",
+        "Specialità": "",
+        "citta": "Trebaseleghe"
+    },
+    {
+
+
+        "Nome": "Giorgio Morandin Lorenzo",
+        "NDipendenti": "1",
+        "Telefono": "+39 338 488 8466",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Luca Groppello Marco",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 050 6094",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Manuel Teo",
+        "NDipendenti": "1",
+        "Telefono": "+39 393 912 0457",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Pipitone Maurizio Hydro-tech",
+        "NDipendenti": "1",
+        "Telefono": "+39 041 932897",
+        "Sito": "www.hydro-tech.it",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "03738200272",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Mariano Dei Rossi",
+        "NDipendenti": "1",
+        "Telefono": "+39 327 788 8483",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Davide 2",
+        "NDipendenti": "1",
+        "Telefono": "+39 342 837 8483",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Claudio Concolato Termoidraulico",
+        "NDipendenti": "1",
+        "Telefono": "+39 339 697 8471",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "02723970279",
+        "Specialità": "",
+        "citta": "Santa Maria Di Sala Venezia"
+    },
+    {
+
+
+        "Nome": "Michele Maguolo",
+        "NDipendenti": "1",
+        "Telefono": "+39 347 271 8760",
+        "Sito": "",
+        "Creato": "03/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Artigiano piccoli lavori e appartamentini",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Diego Biesso",
+        "NDipendenti": "1",
+        "Telefono": "+39 348 783 4896",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Lavori edili privati e ampliamenti",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Cristian Guaina",
+        "NDipendenti": "1",
+        "Telefono": "+39 393 698 1829",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "muratore posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Soni Spinea",
+        "NDipendenti": "1",
+        "Telefono": "+39 327 935 6118",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "muratore posatore",
+        "PIVA": "",
+        "Specialità": "piccole ristrutturazioni bagni ecc",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "MC SERVICE",
+        "NDipendenti": "",
+        "Telefono": "+39 351 928 9416",
+        "Sito": "",
+        "Creato": "oggi",
+        "email": "",
+        "Categoria": "Idraulico Elettricista",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mira (Venezia)"
+    },
+    {
+
+
+        "Nome": "IBR Costruzioni e restauri srl",
+        "NDipendenti": "",
+        "Telefono": "+39 329 700 4429",
+        "Sito": "",
+        "Creato": "24/05/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "04825330279",
+        "Specialità": "Costruzioni e restauri",
+        "citta": "Quarto D'Altino"
+    },
+    {
+
+
+        "Nome": "Restauro Totale",
+        "NDipendenti": "",
+        "Telefono": "+39 327 844 9916",
+        "Sito": "",
+        "Creato": "11/03/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "Restauro totale",
+        "citta": "Scorzè"
+    },
+    {
+
+
+        "Nome": "Vaber Serramenti",
+        "NDipendenti": "",
+        "Telefono": "+39 041 541 7020",
+        "Sito": "www.vaberserramenti.com",
+        "Creato": "01/03/2024",
+        "email": "",
+        "Categoria": "Falegname",
+        "PIVA": "04055890273",
+        "Specialità": "Serramenti",
+        "citta": "Dese Venezia"
+    },
+    {
+
+
+        "Nome": "MFD Service srl",
+        "NDipendenti": "",
+        "Telefono": "+39 02 3293 3881",
+        "Sito": "",
+        "Creato": "26/02/2024",
+        "email": "",
+        "Categoria": "Muratore Lavori edili e manutenzioni",
+        "PIVA": "",
+        "Specialità": "Lavori edili e manutenzioni",
+        "citta": "Milano"
+    },
+    {
+
+
+        "Nome": "GR di Gega Robert",
+        "NDipendenti": "",
+        "Telefono": "+39 388 101 8496",
+        "Sito": "",
+        "Creato": "23/02/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "Imbiancatura, verniciatura, stucchi, decori, cartongesso",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "I.E.I.C.",
+        "NDipendenti": "",
+        "Telefono": "+39 041 534 0859",
+        "Sito": "www.ieic.it",
+        "Creato": "19/02/2024",
+        "email": "",
+        "Categoria": "Pittore Elettricista Termo-Idraulico",
+        "PIVA": "04195250271",
+        "Specialità": "Restauri chiavi in mano",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Officina Fabbrile di Dalla Puppa Luca",
+        "NDipendenti": "",
+        "Telefono": "+39 328 323 7934",
+        "Sito": "",
+        "Creato": "15/02/2024",
+        "email": "",
+        "Categoria": "Carpentiere - Fabbro",
+        "PIVA": "03345420271",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Officina Tenderini Marco",
+        "NDipendenti": "",
+        "Telefono": "+39 041 524 6800",
+        "Sito": "",
+        "Creato": "15/02/2024",
+        "email": "",
+        "Categoria": "Carpentiere-Fabbro",
+        "PIVA": "",
+        "Specialità": "Fabbri dal 1804",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Edil.Reni",
+        "NDipendenti": "",
+        "Telefono": "+39 388 112 9692",
+        "Sito": "",
+        "Creato": "13/02/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Paolo Turcato",
+        "NDipendenti": "",
+        "Telefono": "+39 348 794 3464",
+        "Sito": "",
+        "Creato": "17/01/2024",
+        "email": "",
+        "Categoria": "Muratore (calcestruzzo e pavimenti esterni)",
+        "PIVA": "",
+        "Specialità": "Cemento stampato e semine",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "G.F. Stufe di Ferraro Giorgio",
+        "NDipendenti": "",
+        "Telefono": "+39 041 593 7600",
+        "Sito": "",
+        "Creato": "16/01/2024",
+        "email": "",
+        "Categoria": "Caminetti Stube Refrattari",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mogliano Veneto Treviso"
+    },
+    {
+
+
+        "Nome": "Demir Pronto Intervento di Vaskaucanu Demir",
+        "NDipendenti": "",
+        "Telefono": "+39 327 854 0555",
+        "Sito": "",
+        "Creato": "16/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Venezia"
+    },
+    {
+
+
+        "Nome": "Start costruzioni e restauri s.a.s.",
+        "NDipendenti": "",
+        "Telefono": "+39 338 761 5800",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "costruzioni ristrutturazioni impiantistica",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Mauro Rensetto",
+        "NDipendenti": "",
+        "Telefono": "+39 338 209 0363",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "",
+        "Specialità": "Artigiano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Michele Idr Beppe",
+        "NDipendenti": "",
+        "Telefono": "+39 335 526 9816",
+        "Sito": "",
+        "Creato": "11/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Artigiano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Michele Ganze",
+        "NDipendenti": "",
+        "Telefono": "+39 338 844 9192",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "Artigiano",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Ditta Bacco di Bacco Andrea",
+        "NDipendenti": "",
+        "Telefono": "+39 335 640 4894",
+        "Sito": "www.baccoandrea.it",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Elettricista",
+        "PIVA": "02083700662",
+        "Specialità": "Antenna satellitare videosorveglianza",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Imri Gasi",
+        "NDipendenti": "",
+        "Telefono": "+39 320 978 1570",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "04643680277",
+        "Specialità": "",
+        "citta": "Mira"
+    },
+    {
+
+
+        "Nome": "Matteo Andrea Pittore",
+        "NDipendenti": "",
+        "Telefono": "+39 340 474 7561",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Pittore Giampy",
+        "NDipendenti": "",
+        "Telefono": "+39 349 394 1479",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Pittore Ciano",
+        "NDipendenti": "",
+        "Telefono": "+39 340 378 5990",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Giampi Pittore 2",
+        "NDipendenti": "",
+        "Telefono": "+39 334 821 6074",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Berto Serena Pittore",
+        "NDipendenti": "",
+        "Telefono": "+39 338 676 9450",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Faik personale piast.",
+        "NDipendenti": "",
+        "Telefono": "+39 348 896 2359",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Piast. Filippo",
+        "NDipendenti": "",
+        "Telefono": "+39 340 222 7883",
+        "Sito": "",
+        "Creato": "09/01/2024",
+        "email": "",
+        "Categoria": "Posatore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Davide Hidros",
+        "NDipendenti": "",
+        "Telefono": "+39 349 697 9122",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Idraulico",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Ahmed Hadam",
+        "NDipendenti": "",
+        "Telefono": "+39 02 7999 6686",
+        "Sito": "",
+        "Creato": "08/01/2024",
+        "email": "",
+        "Categoria": "Muratore",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Milano"
+    },
+    {
+
+
+        "Nome": "Il tendaio Zakaria",
+        "NDipendenti": "",
+        "Telefono": "+39 340 762 2942",
+        "Sito": "iltendaiozakaria.it",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Tendaggi e pergole",
+        "PIVA": "03265070288",
+        "Specialità": "Tende",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Nuova sole tenda di Lion Renato",
+        "NDipendenti": "",
+        "Telefono": "+39 041 534 2399",
+        "Sito": "",
+        "Creato": "04/01/2024",
+        "email": "",
+        "Categoria": "Tendaggi e pergole",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mestre Venezia"
+    },
+    {
+
+
+        "Nome": "Aiello Nunzio",
+        "NDipendenti": "",
+        "Telefono": "+39 393 009 0065",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mira"
+    },
+    {
+
+
+        "Nome": "Mattia Geometra Gian",
+        "NDipendenti": "",
+        "Telefono": "+39 392 658 1288",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Mark Ballarin Carlo",
+        "NDipendenti": "",
+        "Telefono": "+39 349 250 9320",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Giolo",
+        "NDipendenti": "",
+        "Telefono": "+39 335 122 3835",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Catene"
+    },
+    {
+
+
+        "Nome": "Paolo Dario",
+        "NDipendenti": "",
+        "Telefono": "+39 347 304 4574",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Geometra Convento Nicola Fabio",
+        "NDipendenti": "",
+        "Telefono": "+39 339 219 0843",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Marghera Venezia"
+    },
+    {
+
+
+        "Nome": "Bruno Imce",
+        "NDipendenti": "",
+        "Telefono": "+39 338 572 3647",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Franco Scaggiante",
+        "NDipendenti": "",
+        "Telefono": "+39 335 520 1531",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "03970540963",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Davide Ruggero Franco Geometra",
+        "NDipendenti": "",
+        "Telefono": "+39 346 097 2269",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Carlo Bertoldo Geometra Dario",
+        "NDipendenti": "",
+        "Telefono": "+39 340 066 9123",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Spinea"
+    },
+    {
+
+
+        "Nome": "Alvise Carlo",
+        "NDipendenti": "",
+        "Telefono": "+39 333 735 1060",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Spinea"
+    },
+    {
+
+
+        "Nome": "Alberto Matteo",
+        "NDipendenti": "",
+        "Telefono": "+39 393 839 0952",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Geometra",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Treviso"
+    },
+    {
+
+
+        "Nome": "Filippo Caprioglio",
+        "NDipendenti": "",
+        "Telefono": "+39 335 686 7444",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "03478080271",
+        "Specialità": "",
+        "citta": "Marghera Venezia"
+    },
+    {
+
+
+        "Nome": "Thomas Stefani Architetto Paolo Micheletto",
+        "NDipendenti": "",
+        "Telefono": "+39 349 618 5872",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "02497090221",
+        "Specialità": "",
+        "citta": "Trento"
+    },
+    {
+
+
+        "Nome": "Silvia Architetto Roberto Tabacchino",
+        "NDipendenti": "",
+        "Telefono": "+39 338 927 4500",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Riccardo Pietropolli",
+        "NDipendenti": "",
+        "Telefono": "+39 335 330 907",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Paolo Micheletto",
+        "NDipendenti": "",
+        "Telefono": "+39 328 410 7128",
+        "Sito": "",
+        "Creato": "02/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Jasmine Biccai Architetto Gianlombardo",
+        "NDipendenti": "",
+        "Telefono": "+39 348 776 6244",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Hermes Architetto Guglie",
+        "NDipendenti": "",
+        "Telefono": "+39 328 384 0538",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Diego Giallombardo Architetto Onix",
+        "NDipendenti": "",
+        "Telefono": "+39 335 709 8081",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Via Gatta - Venezia"
+    },
+    {
+
+
+        "Nome": "Francesca Artico Abram",
+        "NDipendenti": "",
+        "Telefono": "+39 345 932 0522",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Federica Paolo",
+        "NDipendenti": "",
+        "Telefono": "+39 329 298 5879",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Architetto",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Termotecnico amico Cagnin",
+        "NDipendenti": "",
+        "Telefono": "+39 335 6567 2873",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "Impiantistica",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Bertani Legno",
+        "NDipendenti": "",
+        "Telefono": "",
+        "Sito": "",
+        "Creato": "01/01/2024",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "Tetti in legno",
+        "citta": "Piove di sacco Padova"
+    },
+    {
+
+
+        "Nome": "Giulio Barbini Bar Pell",
+        "NDipendenti": "",
+        "Telefono": "+39 334 822 3069",
+        "Sito": "www.studiobarbini.com",
+        "Creato": "31/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "Edile",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Pavan Massimo",
+        "NDipendenti": "",
+        "Telefono": "+39 348 300 0235",
+        "Sito": "",
+        "Creato": "31/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere Termotecnico",
+        "PIVA": "",
+        "Specialità": "Impiantistica",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Marco Alberti",
+        "NDipendenti": "",
+        "Telefono": "+39 348 542 1430",
+        "Sito": "",
+        "Creato": "31/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Studio Tecnico ing. Francesco Chiacchiaretta",
+        "NDipendenti": "",
+        "Telefono": "+39 337 507 896",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "Sicurezza",
+        "citta": "Marghera"
+    },
+    {
+
+
+        "Nome": "Marco Zennaro",
+        "NDipendenti": "",
+        "Telefono": "+39 335 801 5815",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Andrea",
+        "NDipendenti": "",
+        "Telefono": "+39 335 611 6387",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Stefano Gaion Ing. Impiantista",
+        "NDipendenti": "",
+        "Telefono": "+39 331 597 6195",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Ingegnere",
+        "PIVA": "02568400275",
+        "Specialità": "Impiantista",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Alpi Legnami s.r.l.",
+        "NDipendenti": "",
+        "Telefono": "+39 335 785 7497",
+        "Sito": "www.alpilegnami.com",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Falegname",
+        "PIVA": "04358060277",
+        "Specialità": "",
+        "citta": "Marghera"
+    },
+    {
+
+
+        "Nome": "Jacem Koussay",
+        "NDipendenti": "",
+        "Telefono": "+39 351 010 7703",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": "Bologna"
+    },
+    {
+
+
+        "Nome": "Lanzoni Riccardo",
+        "NDipendenti": "",
+        "Telefono": "+39 335 523 9263",
+        "Sito": "",
+        "Creato": "30/12/2023",
+        "email": "",
+        "Categoria": "Carpentiere",
+        "PIVA": "",
+        "Specialità": "",
+        "citta": ""
+    },
+    {
+
+
+        "Nome": "Effebi color",
+        "NDipendenti": "",
+        "Telefono": "+39 380 716 6085",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Pittori",
+        "PIVA": "",
+        "Specialità": "Pitture esterni e interni, stucchi, cartongesso",
+        "citta": "Mestre"
+    },
+    {
+
+
+        "Nome": "Antonio Titti Martina",
+        "NDipendenti": "",
+        "Telefono": "+39 347 508 6781",
+        "Sito": "",
+        "Creato": "29/12/2023",
+        "email": "",
+        "Categoria": "Pittore",
+        "PIVA": "",
+        "Specialità": "Piccoli appartamenti",
+        "citta": "Mestre"
+    }
+]

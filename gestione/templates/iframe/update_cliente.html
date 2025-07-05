@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica Cliente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Styles for the navigation bar */
+        .top-nav {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100% - 50px); /* Adjusted for the nav bar */
+        }
+        .form-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="top-nav">
+        <div class="nav-title">Modifica Cliente</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="navigateBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Indietro
+            </button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <h1>Modifica Cliente</h1>
+            <form id="cliente-form">
+                <div class="form-group">
+                    <label for="descrizione">Descrizione</label>
+                    <input type="text" id="descrizione" name="descrizione" required>
+                </div>
+                <div class="form-group societa-field">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome">
+                </div>
+                <div class="form-group societa-field">
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" name="cognome">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="cellulare">Cellulare</label>
+                    <input type="text" id="cellulare" name="cellulare">
+                </div>
+                <div class="form-group">
+                    <label for="indirizzo">Indirizzo</label>
+                    <input type="text" id="indirizzo" name="indirizzo">
+                </div>
+                <div class="form-group">
+                    <label for="codice_fiscale">Codice Fiscale</label>
+                    <input type="text" id="codice_fiscale" name="codice_fiscale">
+                </div>
+                <div class="form-group">
+                    <label for="piva">Partita IVA</label>
+                    <input type="text" id="piva" name="piva">
+                </div>
+                <button type="submit">Salva</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per tornare indietro
+        function navigateBack() {
+            if (window.parent) {
+                // Se il contenuto è caricato in un iframe
+                window.parent.closeIframeFromChild();
+            } else {
+                // Se il contenuto è aperto in una nuova finestra
+                window.close();
+            }
+        }
+        
+        let clienteData;
+
+        window.onload = async function () {
+            try {
+                clienteData = JSON.parse('{{ cliente_json|escapejs }}');
+                console.log('clienteData:', clienteData);
+
+                // Funzione helper per gestire valori N/A
+                function sanitizeValue(value) {
+                    if (value === 'N/A' || value === 'n/a' || value === 'NULL' || value === null || value === undefined) {
+                        return '';
+                    }
+                    return value;
+                }
+
+                // Popola i campi del form con gestione dei valori N/A
+                document.getElementById('descrizione').value = sanitizeValue(clienteData.descrizione);
+                document.getElementById('nome').value = sanitizeValue(clienteData.nome);
+                document.getElementById('cognome').value = sanitizeValue(clienteData.cognome);
+                document.getElementById('email').value = sanitizeValue(clienteData.email);
+                document.getElementById('cellulare').value = sanitizeValue(clienteData.cellulare);
+                document.getElementById('indirizzo').value = sanitizeValue(clienteData.indirizzo);
+                document.getElementById('codice_fiscale').value = sanitizeValue(clienteData.codice_fiscale);
+                document.getElementById('piva').value = sanitizeValue(clienteData.piva);
+
+                // Mostra o nasconde i campi in base al valore di "societa"
+                if (clienteData.societa) {
+                    document.querySelectorAll('.societa-field').forEach(el => el.style.display = 'none');
+                    document.querySelectorAll('.societa-only').forEach(el => el.style.display = 'block');
+                } else {
+                    document.querySelectorAll('.societa-field').forEach(el => el.style.display = 'block');
+                    document.querySelectorAll('.societa-only').forEach(el => el.style.display = 'none');
+                }
+            } catch (error) {
+                console.error('Errore durante il caricamento dei dati:', error);
+            }
+        };
+
+        document.getElementById('cliente-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validazione personalizzata dell'email
+            const emailValue = document.getElementById('email').value.trim();
+            if (emailValue && emailValue !== 'N/A' && emailValue !== 'n/a' && emailValue !== 'NULL') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailValue)) {
+                    alert('Inserisci un indirizzo email valido o lascia il campo vuoto');
+                    return;
+                }
+            }
+            
+            const descrizione = document.getElementById('descrizione').value;
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+            const email = document.getElementById('email').value;
+            const cellulare = document.getElementById('cellulare').value;
+            const indirizzo = document.getElementById('indirizzo').value;
+            const codice_fiscale = document.getElementById('codice_fiscale').value;
+            const piva = document.getElementById('piva').value;
+
+            const clienteDataToSend = {
+                descrizione,
+                nome,
+                cognome,
+                email,
+                cellulare,
+                indirizzo,
+                societa: clienteData.societa,
+                codice_fiscale,
+                piva
+            };
+
+            try {
+                const response = await fetch(`/update_cliente/${clienteData.id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(clienteDataToSend),
+                });
+
+                if (response.ok) {
+                    // Aggiungi alla cronologia globale
+                    if (window.parent && window.parent.addToGlobalHistory) {
+                        window.parent.addToGlobalHistory('client', 'update', 
+                            `Cliente modificato: "${descrizione}"`, 
+                            clienteData.id
+                        );
+                    }
+
+                    // Chiudi l'iframe o la finestra
+                    if (window.parent) {
+                        // Se il contenuto è in un iframe
+                        window.parent.closeIframeFromChild();
+                    } else {
+                        // Se il contenuto è in una nuova finestra
+                        window.close();
+                    }
+                } else {
+                    throw new Error('Errore durante il salvataggio.');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore durante il salvataggio.');
+            }
+        });
+    </script>
+</body>
+</html>

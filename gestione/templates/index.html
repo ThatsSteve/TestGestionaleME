@@ -1,0 +1,2640 @@
+<!DOCTYPE html>
+<html lang="it" style=" height: 100%;">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missionedilizia</title>
+    <style>
+        body {
+            font-size: 1rem; /* Reduced from 0.8rem */
+        }
+        .stage {
+            background-color: transparent; /* Rimosso sfondo grigio chiaro */
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 320px;
+            width: calc((100vw - 120px) / 4); /* Adatta larghezza alla risoluzione */
+            max-width: 400px;
+            flex-shrink: 0;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Bordo trasparente bianco */
+            pointer-events: auto;
+        }
+        .iframe-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .iframe-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            margin: 2% auto;
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden;
+        }
+        .close-iframe {
+            position: absolute;
+            top: 8px;
+            right: 8px; 
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 20px;
+            font-weight: bold; 
+            cursor: pointer;
+            z-index: 1001;
+            padding: 6px 8px;
+            border-radius: 50%;
+            border: none;
+            transition: all 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        
+        .close-iframe:hover {
+            background: rgba(220, 53, 69, 0.8);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        #contentIframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 0.68rem; /* Reduced from 0.8rem */
+        }
+        .drop-zone {
+            min-height: 90px; /* 10% smaller */
+            height: 100%;
+        }
+        #addFornitoreModal, #addClienteModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        #addFornitoreModal .iframe-content, #addClienteModal .iframe-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            height: 85%;
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden;
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar {
+            width: 12px;
+            height: 12px; /* Added for horizontal scrollbar */
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar-track {
+            background: #e0e0e0; /* Lighter gray */
+            border-radius: 10px; /* Rounded corners */
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar-thumb {
+            background-color: #b0b0b0; /* Lighter gray */
+            border-radius: 10px;
+            border: 3px solid transparent;
+        }
+        .work-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: move;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .work-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .work-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .work-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .work-item-number {
+            background-color: #007bff;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 12px;
+            min-width: 50px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .work-item-title {
+            flex: 1;
+            font-weight: bold;
+            margin-bottom: 5px;
+            line-height: 1.3;
+            padding-left: 10px;
+        }
+        .work-item.has-supplier {
+            background-color: #e6ffe6; /* Very light green background */
+        }
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .confirmation-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .confirmation-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .confirmation-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .confirmation-buttons .confirm {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .confirmation-buttons .cancel {
+            background-color: #f44336;
+            color: white;
+        }
+        hr.separator {
+            border: 0;
+            border-top: 1px solid #d3d3d3; /* Slightly darker gray */
+            margin: 8px 0;
+        }
+        th {
+            color: #888; /* Slightly lighter color */
+            font-size: 0.68rem; /* Reduced from 0.8rem */
+        }
+        .bg-gray-50 {
+            background-color: #f9f9f9; /* Slightly lighter background */
+        }
+        .bg-yellow-500 {
+            background-color: #f4a81e; /* Custom yellow */
+        }
+        .bg-gray-500 {
+            background-color: #5c5c5c; /* Custom gray */
+        }
+        header {
+            height: 64px; /* Altezza uniforme per l'header */
+        }
+        header .h-10 {
+            height: 40px; /* Altezza uniforme per il logo */
+        }
+        header input {
+            height: 40px; /* Altezza uniforme per l'input di ricerca */
+        }
+        header button {
+            height: 40px; /* Altezza uniforme per i pulsanti */
+        }
+        main {
+            overflow-x: auto; /* Ensure columns do not go beyond the screen */
+            overflow-y: hidden; /* Prevent vertical overflow */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        main::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        @media (max-width: 768px) {
+            .iframe-content {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+            #addFornitoreModal .iframe-content, #addClienteModal .iframe-content {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+            header .logo-img {
+                height: 32px; /* Smaller logo for mobile */
+            }
+        }
+        /* Mobile menu styles */
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 75%;
+            background-color: white;
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+        
+        #mobileMenu.open {
+            transform: translateX(0);
+        }
+        
+        #mobileMenuOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            display: none;
+        }
+        .droppable-zone.over {
+            background-color: #e0f7fa; /* Cambia colore quando un elemento viene trascinato sopra */
+        }
+        
+        /* CSS per i pulsanti di modifica colonna */
+        .column-edit-btn {
+            opacity: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            padding: 2px 6px;
+            cursor: pointer;
+            color: #333;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .column-edit-btn:hover {
+            opacity: 1 !important;
+            background: rgba(255, 255, 255, 1);
+            color: #007bff;
+            border-color: #007bff;
+            transform: scale(1.1);
+        }
+        
+        .column-header:hover .column-edit-btn {
+            opacity: 0.7;
+        }
+        
+        .column-edit-input {
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .column-edit-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            border-color: #1d4ed8;
+        }
+        
+        .column-edit-buttons {
+            margin-left: 8px;
+            display: flex;
+            gap: 4px;
+        }
+        
+        .confirm-btn, .cancel-btn {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 2px 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .confirm-btn {
+            color: #16a34a;
+            border-color: #16a34a;
+        }
+        
+        .confirm-btn:hover {
+            background: #16a34a;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .cancel-btn {
+            color: #dc2626;
+            border-color: #dc2626;
+        }
+        
+        .cancel-btn:hover {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.05);
+        }
+        /* WhatsApp modal styles */
+        .whatsapp-fornitore-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .whatsapp-fornitore-item:hover {
+            background-color: #25D366;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
+        }
+        
+        .fornitore-info {
+            flex: 1;
+        }
+        
+        .fornitore-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .fornitore-categoria {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .fornitore-telefono {
+            color: #888;
+            font-size: 13px;
+        }
+        
+        .whatsapp-fornitore-item:hover .fornitore-categoria,
+        .whatsapp-fornitore-item:hover .fornitore-telefono {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+        }
+        
+        .whatsapp-fornitore-item:hover .whatsapp-icon {
+            opacity: 1;
+        }
+
+        /* Modal WhatsApp specifici */
+        #whatsappFornitoriModal .confirmation-content {
+            margin: 5% auto;
+            max-width: 90%;
+            width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* Responsive per mobile */
+        @media (max-width: 768px) {
+            #whatsappFornitoriModal .confirmation-content {
+                margin: 2% auto;
+                max-width: 95%;
+                width: auto;
+                max-height: 90vh;
+                padding: 15px;
+            }
+            
+            .fornitore-name {
+                font-size: 14px;
+            }
+            
+            .fornitore-categoria {
+                font-size: 12px;
+            }
+            
+            .fornitore-telefono {
+                font-size: 11px;
+            }
+            
+            .whatsapp-fornitore-item {
+                padding: 12px;
+            }
+        }
+
+        /* Stili per lo slider toggle */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: 25px;
+            padding: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .toggle-button {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .toggle-button.active {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 2px 4px rgba(37, 211, 102, 0.3);
+        }
+
+        .toggle-button:not(.active) {
+            color: #666;
+        }
+
+        .toggle-button:not(.active):hover {
+            background-color: #e9ecef;
+        }
+
+        .stage-columns {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 140px); /* Lasciamo spazio per la barra di scorrimento */
+            overflow-x: visible; /* Permettiamo che il contenuto vada oltre */
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            user-select: none;
+            min-width: max-content;
+            position: relative;
+            padding-bottom: 80px; /* Spazio per la barra di scorrimento personalizzata */
+        }
+
+        .stage-columns::-webkit-scrollbar {
+            display: none; /* Nascondiamo completamente la barra originale */
+        }
+
+        /* Barra di scorrimento personalizzata sempre visibile */
+        .custom-scrollbar {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 12px;
+            background: #f1f1f1;
+            border-radius: 6px;
+            z-index: 50;
+            display: block;
+        }
+
+        .custom-scrollbar-thumb {
+            height: 100%;
+            background-color: #888;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            min-width: 30px;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .custom-scrollbar-thumb:hover {
+            background-color: #666;
+        }
+
+        .custom-scrollbar-thumb:active {
+            background-color: #555;
+        }
+
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Grigio chiaro originale */
+            border-radius: 6px;
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar-thumb {
+            background-color: #888; /* Grigio originale */
+            border-radius: 6px;
+            border: 2px solid transparent;
+        }
+        .flex-1.bg-transparent.rounded-b-lg.shadow-sm.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+            background-color: #666;
+        }
+
+        @media (max-width: 1600px) {
+            .stage {
+                width: calc((100vw - 120px) / 3);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .stage {
+                width: calc((100vw - 100px) / 2);
+                min-width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stage {
+                width: calc(100vw - 80px);
+                min-width: 260px;
+            }
+            .stage-columns {
+                padding: 10px;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 overflow-hidden" style="background: linear-gradient(to bottom right, #f4a81e, #7a7a7a);">
+    <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <!-- Logo e controlli undo/redo -->
+        <div class="flex items-center md:ml-0">
+            <a href="/"><img src="/static/LogoSmall.png" alt="Missionedilizia Logo" class="logo-img h-8 md:h-10"></a>
+            
+            <!-- Controlli Cronologia -->
+            <div class="ml-4 flex items-center space-x-2">
+                <button
+                    id="historyButton"
+                    class="p-2 rounded-full hover:bg-gray-200 transition-colors"
+                    onclick="showGlobalHistory()"
+                    title="Mostra cronologia completa delle modifiche"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search bar - more space on mobile -->
+        <div class="flex-1 flex justify-center px-2 md:px-4">
+            <div class="relative w-full md:w-1/2 flex items-center">
+                <div class="relative flex-1">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cerca..."
+                    class="w-full p-2 pl-10 pr-8 bg-white border border-gray-400 rounded-full shadow-sm focus:outline-none focus:border-gray-600"
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+                <span
+                    id="clearSearchIcon"
+                    class="hidden absolute right-3 top-3 text-gray-500 cursor-pointer"
+                    onclick="clearSearch()"
+                >
+                    <!-- A nicer SVG for the 'x' icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.3 5.71a1 1 0 00-1.42-1.42L12 9.17 7.11 4.29A1 1 0 105.69 5.71L10.59 10.6l-4.9 4.9a1 1 0 001.42 1.42l4.89-4.89 4.89 4.89a1 1 0 001.42-1.42l-4.9-4.9 4.9-4.89z"/>
+                    </svg>
+                </span>
+                </div>
+                <!-- WhatsApp button vicino alla barra di ricerca -->
+                <button
+                    id="whatsappButton"
+                    class="ml-3 bg-green-600 text-white h-10 w-10 rounded-full shadow-lg hover:bg-green-700 flex items-center justify-center transition"
+                    onclick="openWhatsAppModal()"
+                    title="Contatta fornitori e clienti su WhatsApp"
+                >
+                                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="#25D366">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50002 12C3.50002 7.30558 7.3056 3.5 12 3.5C16.6944 3.5 20.5 7.30558 20.5 12C20.5 16.6944 16.6944 20.5 12 20.5C10.3278 20.5 8.77127 20.0182 7.45798 19.1861C7.21357 19.0313 6.91408 18.9899 6.63684 19.0726L3.75769 19.9319L4.84173 17.3953C4.96986 17.0955 4.94379 16.7521 4.77187 16.4751C3.9657 15.176 3.50002 13.6439 3.50002 12ZM12 1.5C6.20103 1.5 1.50002 6.20101 1.50002 12C1.50002 13.8381 1.97316 15.5683 2.80465 17.0727L1.08047 21.107C0.928048 21.4637 0.99561 21.8763 1.25382 22.1657C1.51203 22.4552 1.91432 22.5692 2.28599 22.4582L6.78541 21.1155C8.32245 21.9965 10.1037 22.5 12 22.5C17.799 22.5 22.5 17.799 22.5 12C22.5 6.20101 17.799 1.5 12 1.5ZM14.2925 14.1824L12.9783 15.1081C12.3628 14.7575 11.6823 14.2681 10.9997 13.5855C10.2901 12.8759 9.76402 12.1433 9.37612 11.4713L10.2113 10.7624C10.5697 10.4582 10.6678 9.94533 10.447 9.53028L9.38284 7.53028C9.23954 7.26097 8.98116 7.0718 8.68115 7.01654C8.38113 6.96129 8.07231 7.046 7.84247 7.24659L7.52696 7.52195C6.76823 8.18414 6.3195 9.2723 6.69141 10.3741C7.07698 11.5163 7.89983 13.314 9.58552 14.9997C11.3991 16.8133 13.2413 17.5275 14.3186 17.8049C15.1866 18.0283 16.008 17.7288 16.5868 17.2572L17.1783 16.7752C17.4313 16.5691 17.5678 16.2524 17.544 15.9269C17.5201 15.6014 17.3389 15.308 17.0585 15.1409L15.3802 14.1409C15.0412 13.939 14.6152 13.9552 14.2925 14.1824Z"/>
+                        </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile hamburger menu button -->
+        <button id="hamburgerButton" class="md:hidden flex items-center justify-center h-8 w-8 text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        
+        <!-- Desktop-only buttons -->
+        <div class="hidden md:flex relative items-center space-x-4">
+            <button
+                class="bg-green-500 text-white h-10 w-10 rounded-full shadow-lg hover:bg-green-600 flex items-center justify-center text-xl py-1 transition"
+                style="padding-top: 0"
+                onclick="openIframe('/crea-ticket-if')"
+            >+</button>
+            <div class="relative">
+                <button
+                    id="optionsButton"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-600 transition"
+                    onclick="toggleOptionsMenu()"
+                >
+                    Tutte le Opzioni
+                </button>
+                <div id="optionsMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg hidden opacity-0 transition-opacity duration-300" style="z-index: 1000">
+                    <ul class="py-2">
+                        <li>
+                            <button
+                                id="toggleColumnsButton"
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-yellow-500"
+                                onclick="toggleHiddenColumns()"
+                            >
+                                Mostra Colonne
+                            </button>
+                        </li>
+                        <hr class="separator">
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="window.location.href = '/strumentiAI'"
+                            >
+                                Strumenti AI
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="window.location.href = '/fornitori'"
+                            >
+                                Fornitori
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="window.location.href = '/clienti'"
+                            >
+                                Clienti
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile menu overlay -->
+    <div id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- Mobile menu sidebar -->
+    <div id="mobileMenu" class="md:hidden">
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-medium">Menu</h2>
+                <button onclick="closeMobileMenu()" class="text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="p-4">
+            <button
+                class="w-full mb-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-600 flex items-center"
+                onclick="openIframe('/crea-ticket-if'); closeMobileMenu();"
+            >
+                <span class="mr-2">+</span>
+                <span>Nuovo Ticket</span>
+            </button>
+            
+            <button
+                id="mobileToggleColumnsButton"
+                class="w-full mb-2 text-left px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                onclick="toggleHiddenColumns(); closeMobileMenu();"
+            >
+                Mostra Colonne
+            </button>
+            
+            <hr class="my-2 border-gray-300">
+            
+            <button
+                class="w-full mb-2 text-left px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                onclick="window.location.href = '/strumentiAI'"
+            >
+                Strumenti AI
+            </button>
+            
+            <button
+                class="w-full mb-2 text-left px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                onclick="window.location.href = '/fornitori'"
+            >
+                Fornitori
+            </button>
+            
+            <button
+                class="w-full mb-2 text-left px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                onclick="window.location.href = '/clienti'"
+            >
+                Clienti
+            </button>
+        </div>
+    </div>
+    
+    <main id="main" class="flex-1 p-4 overflow-x-auto max-h-screen">
+        <div id="workStages" class="stage-columns" style="padding-bottom: 2rem;"></div> <!-- Updated class -->
+    </main>
+    
+    <!-- Barra di scorrimento orizzontale personalizzata -->
+    <div id="customScrollbar" class="custom-scrollbar">
+        <div id="customScrollbarThumb" class="custom-scrollbar-thumb"></div>
+    </div>
+    
+    <div id="actionArea" class="fixed bottom-0 left-0 right-0 flex h-28 bg-gray-800 text-white" style="display: none;">
+        <div 
+            class="flex-1 flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer text-base"
+            ondrop="handleWorkAction('archive', event)"
+            ondragover="event.preventDefault()"
+        >
+            <span class="text-lg font-bold">Archivia</span>
+        </div>
+        <div 
+            class="flex-1 flex items-center justify-center bg-red-500 hover:bg-red-600 transition-colors cursor-pointer text-base"
+            ondrop="handleWorkAction('delete', event)"
+            ondragover="event.preventDefault()"
+        >
+            <span class="text-lg font-bold">Elimina</span>
+        </div>
+        <div 
+            class="flex-1 flex items-center justify-center bg-blue-500 hover:bg-blue-600 transition-colors cursor-pointer text-base"
+            ondrop="handleWorkAction('organize', event)"
+            ondragover="event.preventDefault()"
+        >
+            <span class="text-lg font-bold">Offerte Perse</span>
+        </div>
+        <div 
+            class="flex-1 flex items-center justify-center bg-purple-500 hover:bg-purple-600 transition-colors cursor-pointer text-base"
+            ondrop="handleWorkAction('sospeso', event)"
+            ondragover="event.preventDefault()"
+        >
+            <span class="text-lg font-bold">In sospeso</span>
+        </div>
+    </div>
+    <div id="iframeModal" class="iframe-modal">
+        <div class="iframe-content">
+            <span class="close-iframe" onclick="closeIframe()">&times;</span>
+            <iframe id="contentIframe"></iframe>
+        </div>
+    </div>
+    <div id="addFornitoreModal" class="iframe-modal">
+        <div class="iframe-content">
+            <span class="close-iframe" onclick="closeIframe('addFornitoreModal')">&times;</span>
+            <iframe id="addFornitoreIframe" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+    <div id="addClienteModal" class="iframe-modal">
+        <div class="iframe-content">
+            <span class="close-iframe" onclick="closeIframe('addClienteModal')">&times;</span>
+            <iframe id="addClienteIframe" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="confirmation-content">
+            <p>Sei sicuro di voler eseguire questa operazione?</p>
+            <div class="confirmation-buttons">
+                <button class="confirm" onclick="confirmAction()">Conferma</button>
+                <button class="cancel" onclick="cancelAction()">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal di conferma per modifica nome colonna -->
+    <div id="columnRenameModal" class="confirmation-modal">
+        <div class="confirmation-content">
+            <h3>Conferma modifica</h3>
+            <p id="confirmationMessage">Sei sicuro di voler cambiare il nome della colonna?</p>
+            <div class="confirmation-buttons">
+                <button class="confirm" onclick="confirmColumnRename()">Conferma</button>
+                <button class="cancel" onclick="cancelColumnRename()">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp fornitori modal -->
+    <div id="whatsappFornitoriModal" class="confirmation-modal" onclick="closeWhatsAppModalOnOutsideClick(event)">
+        <div class="confirmation-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative;">
+            <!-- X per chiudere il modal -->
+            <button class="close-whatsapp-modal" onclick="closeWhatsAppModal()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666; z-index: 10;">
+                ×
+            </button>
+            
+            <h3 style="margin-bottom: 20px; color: #25D366;">📱 Contatta su WhatsApp</h3>
+            
+            <!-- Toggle slider tra fornitori e clienti -->
+            <div class="toggle-container">
+                <button class="toggle-button active" id="fornitoriToggle" onclick="switchToFornitori()">
+                    🏢 Fornitori
+                </button>
+                <button class="toggle-button" id="clientiToggle" onclick="switchToClienti()">
+                    👥 Clienti
+                </button>
+            </div>
+            
+            <div id="whatsappFornitoriList" style="text-align: left;">
+                <p style="text-align: center; color: #666;">Caricamento...</p>
+            </div>
+            <div class="confirmation-buttons" style="margin-top: 20px;">
+                <button class="cancel" onclick="closeWhatsAppModal()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cronologia Globale -->
+    <div id="globalHistoryModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" style="display: none;">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">Cronologia Completa delle Modifiche</h3>
+                <button onclick="closeGlobalHistory()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Filtri per la cronologia -->
+            <div class="mb-4 flex flex-wrap gap-2">
+                <button onclick="filterHistory('all')" class="filter-btn active px-3 py-1 rounded-full text-sm bg-blue-500 text-white">Tutte</button>
+                <button onclick="filterHistory('ticket')" class="filter-btn px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-700 hover:bg-gray-300">Ticket</button>
+                <button onclick="filterHistory('column')" class="filter-btn px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-700 hover:bg-gray-300">Colonne</button>
+                <button onclick="filterHistory('client')" class="filter-btn px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-700 hover:bg-gray-300">Clienti</button>
+                <button onclick="filterHistory('supplier')" class="filter-btn px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-700 hover:bg-gray-300">Fornitori</button>
+            </div>
+            
+            <!-- Lista cronologia -->
+            <div id="historyList" class="max-h-96 overflow-y-auto">
+                <div class="flex items-center justify-center py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                    <span class="ml-2 text-gray-600">Caricamento cronologia...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let workStages = [];
+        let draggedItem = null;
+        let originalWorkStages = [];
+        let pendingAction = null;
+        let pendingEvent = null;
+
+        const stages = [
+            { value: 'in_sospeso_per_valutazioni', label: 'In sospeso per valutazione', color: 'bg-red-400', hidden: true },
+            { value: 'nuovo_sopralluogo', label: 'Nuovo sopralluogo', color: 'bg-yellow-400' },
+            { value: 'da_preventivare', label: 'Da preventivare', color: 'bg-purple-200' },
+            { value: 'inviato_preventivo', label: 'Inviato preventivo', color: 'bg-red-200' }, // Updated color
+            { value: 'confermato_da_eseguire', label: 'Confermato da eseguire', color: 'bg-green-400' },
+            { value: 'con_piattaforma_o_fune', label: 'In corso o In Lavorazione', color: 'bg-orange-400' },  // Renamed stage
+            { value: 'in_corso', label: 'In corso', color: 'bg-blue-200' },
+            { value: 'da_fatturare', label: 'Da fatturare', color: 'bg-yellow-200' },
+            { value: 'fatturate_da_pagare', label: 'Fatturato da pagare', color: 'bg-[rgb(220,108,38)]' },
+            { value: 'archiviate', label: 'Archiviate', color: 'bg-gray-400', hidden: true },
+            { value: 'offerte_perse', label: 'Offerte Perse', color: 'bg-blue-100', hidden: true, source: 'offerte_perse' },
+        ];
+
+        // Initialize the app
+        initApp();
+        
+        // Variabili globali per la modifica delle colonne
+        let currentEditingStage = null;
+        let currentEditingOriginalName = null;
+        let pendingStageRename = null;
+
+        // Funzione per iniziare la modifica di una colonna
+        function startEditingColumn(stageIndex, currentName) {
+            // Evita modifiche multiple contemporanee
+            if (currentEditingStage !== null) {
+                cancelEditingColumn(currentEditingStage);
+            }
+            
+            const titleElement = document.getElementById(`stage-title-${stageIndex}`);
+            
+            currentEditingStage = stageIndex;
+            currentEditingOriginalName = currentName;
+            
+            // Salva il contenuto originale
+            const originalContent = titleElement.innerHTML;
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentName;
+            input.className = 'column-edit-input';
+            input.id = `edit-input-${stageIndex}`;
+            
+            const buttonsContainer = document.createElement('span');
+            buttonsContainer.className = 'column-edit-buttons';
+            buttonsContainer.innerHTML = `
+                <button class="confirm-btn" onclick="requestColumnRename(${stageIndex})">✓</button>
+                <button class="cancel-btn" onclick="cancelEditingColumn(${stageIndex})">✗</button>
+            `;
+            
+            // Salva il contenuto originale come attributo
+            titleElement.setAttribute('data-original-content', originalContent);
+            titleElement.innerHTML = '';
+            titleElement.appendChild(input);
+            titleElement.appendChild(buttonsContainer);
+            
+            input.focus();
+            input.select();
+            
+            // Gestisci Enter per confermare e Escape per annullare
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    requestColumnRename(stageIndex);
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    cancelEditingColumn(stageIndex);
+                }
+            });
+            
+            // Gestisci click fuori per annullare
+            setTimeout(() => {
+                document.addEventListener('click', handleClickOutside, true);
+            }, 100);
+        }
+        
+        // Funzione per gestire il click fuori dall'input di modifica
+        function handleClickOutside(event) {
+            if (currentEditingStage === null) return;
+            
+            const titleElement = document.getElementById(`stage-title-${currentEditingStage}`);
+            const input = document.getElementById(`edit-input-${currentEditingStage}`);
+            
+            // Se il click è fuori dall'input e dai pulsanti, annulla la modifica
+            if (titleElement && !titleElement.contains(event.target)) {
+                cancelEditingColumn(currentEditingStage);
+                document.removeEventListener('click', handleClickOutside, true);
+            }
+        }
+
+        // Funzione per richiedere la conferma della ridenominazione
+        function requestColumnRename(stageIndex) {
+            const input = document.getElementById(`edit-input-${stageIndex}`);
+            const newName = input.value.trim();
+            
+            if (!newName) {
+                alert('Il nome della colonna non può essere vuoto');
+                return;
+            }
+            
+            if (newName === currentEditingOriginalName) {
+                cancelEditingColumn(stageIndex);
+                return;
+            }
+            
+            pendingStageRename = {
+                stageIndex: stageIndex,
+                newName: newName,
+                stageKey: stages[stageIndex].value
+            };
+            
+            document.getElementById('confirmationMessage').textContent = 
+                `Sei sicuro di voler cambiare il nome della colonna da "${currentEditingOriginalName}" a "${newName}"?`;
+            document.getElementById('columnRenameModal').style.display = 'block';
+        }
+
+        // Funzione per confermare la ridenominazione
+        async function confirmColumnRename() {
+            if (!pendingStageRename) return;
+            
+            // Rimuovi il listener del click fuori
+            document.removeEventListener('click', handleClickOutside, true);
+            
+            try {
+                const response = await fetch('/api/update_stage_name/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        stage_key: pendingStageRename.stageKey,
+                        new_name: pendingStageRename.newName
+                    })
+                });
+                
+                if (response.ok) {
+                    // Aggiorna localmente
+                    stages[pendingStageRename.stageIndex].label = pendingStageRename.newName;
+                    workStages[pendingStageRename.stageIndex].title = pendingStageRename.newName;
+                    
+                    // Ripristina il titolo con il nuovo nome (evita doppi bottoni)
+                    const titleElement = document.getElementById(`stage-title-${pendingStageRename.stageIndex}`);
+                    if (titleElement) {
+                        titleElement.innerHTML = `
+                            ${pendingStageRename.newName}
+                            <button class="column-edit-btn" onclick="startEditingColumn(${pendingStageRename.stageIndex}, '${pendingStageRename.newName}')" title="Modifica nome colonna">✏️</button>
+                        `;
+                    }
+                    
+                    // Invia messaggio agli iframe per sincronizzare i nomi
+                    notifyIframesOfStageNameUpdate(pendingStageRename.stageKey, pendingStageRename.newName);
+                    
+                    alert('Nome colonna aggiornato con successo!');
+                } else {
+                    throw new Error('Errore nel salvataggio');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Errore durante il salvataggio del nome della colonna');
+                // Ripristina il nome originale in caso di errore
+                const titleElement = document.getElementById(`stage-title-${pendingStageRename.stageIndex}`);
+                if (titleElement) {
+                    titleElement.innerHTML = `
+                        ${currentEditingOriginalName}
+                        <button class="column-edit-btn" onclick="startEditingColumn(${pendingStageRename.stageIndex}, '${currentEditingOriginalName}')" title="Modifica nome colonna">✏️</button>
+                    `;
+                }
+            }
+            
+            document.getElementById('columnRenameModal').style.display = 'none';
+            pendingStageRename = null;
+            currentEditingStage = null;
+            currentEditingOriginalName = null;
+        }
+        
+        // Funzione per notificare gli iframe del cambio nome colonna
+        function notifyIframesOfStageNameUpdate(stageKey, newName) {
+            // Trova tutti gli iframe aperti e invia loro il messaggio
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage({
+                        type: 'stageNameUpdated',
+                        stageKey: stageKey,
+                        newName: newName
+                    }, '*');
+                } catch (error) {
+                    console.log('Non è possibile comunicare con l\'iframe:', error);
+                }
+            });
+        }
+
+        // Funzione per annullare la ridenominazione
+        function cancelColumnRename() {
+            if (pendingStageRename) {
+                cancelEditingColumn(pendingStageRename.stageIndex);
+            }
+            document.getElementById('columnRenameModal').style.display = 'none';
+            pendingStageRename = null;
+            
+            // Rimuovi il listener del click fuori
+            document.removeEventListener('click', handleClickOutside, true);
+        }
+
+        // Funzione per annullare la modifica di una colonna
+        function cancelEditingColumn(stageIndex) {
+            const titleElement = document.getElementById(`stage-title-${stageIndex}`);
+            const originalContent = titleElement.getAttribute('data-original-content');
+            
+            if (originalContent) {
+                titleElement.innerHTML = originalContent;
+                titleElement.removeAttribute('data-original-content');
+            } else {
+                // Fallback se il contenuto originale non è salvato
+                titleElement.innerHTML = `
+                    ${currentEditingOriginalName}
+                    <button class="column-edit-btn" onclick="startEditingColumn(${stageIndex}, '${currentEditingOriginalName}')" title="Modifica nome colonna">✏️</button>
+                `;
+            }
+            
+            currentEditingStage = null;
+            currentEditingOriginalName = null;
+            
+            // Rimuovi il listener del click fuori
+            document.removeEventListener('click', handleClickOutside, true);
+        }
+
+        // Carica i nomi personalizzati delle colonne all'avvio
+        async function loadCustomStageNames() {
+            try {
+                const response = await fetch('/api/get_stage_names/');
+                if (response.ok) {
+                    const stageNames = await response.json();
+                    
+                    // Aggiorna i nomi delle fasi con quelli personalizzati
+                    stages.forEach(stage => {
+                        if (stageNames[stage.value]) {
+                            stage.label = stageNames[stage.value];
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Errore nel caricamento dei nomi personalizzati:', error);
+            }
+        }
+
+        // Modifica la funzione initApp per caricare i nomi personalizzati
+        async function initApp() {
+            await loadCustomStageNames();
+            await fetchWorkStages();
+            renderWorkStages();
+            setupEventListeners();
+            
+            // Inizializza la barra di scorrimento orizzontale sempre
+            setTimeout(() => {
+                initializeCustomScrollbar();
+            }, 200);
+        }
+
+        // Fetch work stages from the server
+        async function fetchWorkStages() {
+            try {
+                const response = await fetch('/get_work_stages/');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                workStages = stages.map((stage) => ({
+                    title: stage.label,
+                    color: stage.color,
+                    items: data[stage.source || stage.value]?.items || [], // Use source if available
+                    totalValue: data[stage.source || stage.value]?.totalValue || 0 // Use source if available
+                }));
+                originalWorkStages = JSON.parse(JSON.stringify(workStages));
+            } catch (error) {
+                console.error('Errore nel recupero dei dati:', error);
+                // In caso di errore, mantieni i dati esistenti se disponibili
+                if (!workStages || workStages.length === 0) {
+                    // Se non ci sono dati, inizializza con struttura vuota
+                    workStages = stages.map((stage) => ({
+                        title: stage.label,
+                        color: stage.color,
+                        items: [],
+                        totalValue: 0
+                    }));
+                    originalWorkStages = JSON.parse(JSON.stringify(workStages));
+                }
+            }
+        }
+
+        // Update the renderWorkStages function to handle multiple suppliers and display the date only next to the last supplier
+        function renderWorkStages() {
+            const workStagesContainer = document.getElementById('workStages');
+            workStagesContainer.innerHTML = '';
+
+            workStages.forEach((stage, stageIndex) => {
+                if (stages[stageIndex].hidden) return; // Skip hidden columns
+                const stageElement = document.createElement('div');
+                stageElement.className = 'stage flex flex-col'; // Removed shadow
+                stageElement.innerHTML = `
+                    <h2 class="text-sm font-medium p-2 ${stage.color} rounded-lg flex justify-between items-center mb-2 h-9 column-header"> <!-- Removed shadow -->
+                        <span class="flex items-center">
+                            <span id="stage-title-${stageIndex}">
+                                ${stage.title}
+                                <button class="column-edit-btn" onclick="startEditingColumn(${stageIndex}, '${stage.title}')" title="Modifica nome colonna">✏️</button>
+                            </span>
+                        </span>
+                        <span class="bg-white text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"> <!-- 10% smaller width and height -->
+                            ${stage.items.length}
+                        </span>
+                    </h2>
+                     <div class="text-lg font-semibold text-white mb-2 text-center"> <!-- Removed shadow -->
+                        ${Math.floor(stage.totalValue).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }).replace(',00', '')}
+                    </div>
+                    <div class="flex-1 bg-transparent rounded-b-lg shadow-sm overflow-y-auto" style="max-height: calc(100vh - 165px);"> <!-- 10% smaller max-height -->
+                        <div class="flex-1 p-2 space-y-4 drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage-index="${stageIndex}">
+                            ${stage.items.map((item, index) => `<div class="work-item p-3 relative rounded-lg ${item.fornitori.length > 0 ? 'has-supplier' : ''}" draggable="true" ondragstart="drag(event)" data-id="${item.id}" data-index="${index}" onclick="openIframe('/update_work_iframe/${item.id}/')"> <!-- Removed shadow -->
+                                    <!-- Header con numero ticket e checkbox -->
+                                    <div class="work-item-header">
+                                        <div class="work-item-number">${item.numero_ticket}</div>
+                                        <input type="checkbox" class="selezionato-checkbox ml-2" data-id="${item.id}" ${item.selezionato ? 'checked' : ''} onclick="toggleSelezionato(event, ${item.id})">
+                                    </div>
+                                    <!-- Titolo del lavoro -->
+                                    <div class="work-item-title">
+                                        <h3 class="font-medium text-sm">${item.title}</h3>
+                                    </div>
+                                    ${item.client ? `<hr class="separator"><p class="text-sm flex justify-between mb-2"> <!-- Increased font size -->
+                                        <span style="color: #f4a829">${item.client}</span>
+                                    </p>` : ''}
+                                    ${item.riferimento ? `<hr class="separator"><p class="text-sm text-green-600 mb-2">${item.riferimento}</p>` : ''} <!-- Increased font size -->
+                                    ${item.fornitori.length > 0 ? `<hr class="separator"><div class="flex flex-col mt-1 mb-2">
+                                        ${item.fornitori.map((fornitore, i) => `
+                                            <div class="flex justify-between items-center">
+                                                <p class="text-sm text-blue-600">${fornitore}</p> <!-- Increased font size -->
+                                            </div>
+                                        `).join('')}
+                                    </div>` : ''}
+                                    <hr class="separator">
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="text-sm font-medium"> <!-- Increased font size -->
+                                            ${Math.floor(item.value).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }).replace(',00', '')}
+                                        </span>
+                                        <span class="text-sm text-gray-400">${formatDate(item.date)}</span>
+                                    </div>
+                                </div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+                workStagesContainer.appendChild(stageElement);
+            });
+            
+            // Inizializza la barra di scorrimento personalizzata dopo il rendering
+            setTimeout(() => {
+                initializeCustomScrollbar();
+            }, 100);
+        }
+
+        function toggleSelezionato(event, workId) {
+            event.stopPropagation();
+            const checkbox = event.target;
+            const isSelected = checkbox.checked;
+
+            fetch('/update_work/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: workId, selezionato: isSelected })
+            }).then(response => response.json())
+              .then(data => console.log(data.message))
+              .catch(error => console.error('Error:', error));
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('work-item')) {
+                    draggedItem = e.target;
+                    e.target.classList.add('dragging');
+                    document.getElementById('actionArea').style.display = 'flex';
+                }
+            });
+
+            document.addEventListener('dragend', (e) => {
+                if (e.target.classList.contains('work-item')) {
+                    e.target.classList.remove('dragging');
+                    hideActionArea();
+                }
+            });
+
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.getElementById('searchInput').addEventListener('focus', async () => {
+                try {
+                await fetchWorkStages();
+                } catch (error) {
+                    console.error('Errore durante il caricamento dei dati:', error);
+                    // Continua comunque con i dati esistenti
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                const optionsMenu = document.getElementById('optionsMenu');
+                if (!optionsMenu.contains(event.target) && !event.target.matches('#optionsButton')) {
+                    optionsMenu.classList.add('hidden');
+                    optionsMenu.classList.remove('opacity-100');
+                    optionsMenu.classList.add('opacity-0');
+                }
+            });
+            
+            // Add hamburger menu event listener
+            document.getElementById('hamburgerButton').addEventListener('click', openMobileMenu);
+        }
+
+        // Drag and drop functions
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.dataset.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const targetStage = ev.target.closest('.drop-zone');
+
+            // Handle empty space drop:
+            let destinationIndex = -1;
+            const droppedOverWorkItem = ev.target.closest('.work-item');
+            if (droppedOverWorkItem) {
+                destinationIndex = [...targetStage.children].findIndex(child => child === droppedOverWorkItem);
+            }
+            if (destinationIndex === -1) {
+                destinationIndex = targetStage.children.length;
+            }
+
+            const sourceStageIndex = draggedItem.closest('.drop-zone').dataset.stageIndex;
+            const destinationStageIndex = targetStage.dataset.stageIndex;
+            const sourceIndex = draggedItem.dataset.index;
+        
+            moveItem(sourceStageIndex, destinationStageIndex, sourceIndex, destinationIndex);
+            hideActionArea();
+        }
+
+        function hideActionArea() {
+            document.getElementById('actionArea').style.display = 'none';
+        }
+
+        // Move item between stages
+        function moveItem(sourceStageIndex, destinationStageIndex, sourceIndex, destinationIndex) {
+            const [movedItem] = workStages[sourceStageIndex].items.splice(sourceIndex, 1);
+            workStages[destinationStageIndex].items.splice(destinationIndex, 0, movedItem);
+
+            updateStageValues(sourceStageIndex);
+            updateStageValues(destinationStageIndex);
+
+            renderWorkStages();
+            updateServerWithNewPositions(sourceStageIndex, destinationStageIndex);
+        }
+
+        // Update stage total values
+        function updateStageValues(stageIndex) {
+            workStages[stageIndex].totalValue = workStages[stageIndex].items.reduce((sum, item) => {
+                const importo = parseFloat(item.value);
+                return sum + (isNaN(importo) ? 0 : importo);
+            }, 0);
+        }
+
+        // Update server with new positions
+        async function updateServerWithNewPositions(sourceStageIndex, destinationStageIndex) {
+            const updatedData = [
+                {
+                    stage: stages[sourceStageIndex].value,
+                    items: workStages[sourceStageIndex].items.map((item, index) => ({
+                        id: item.id,
+                        position: index
+                    }))
+                },
+                {
+                    stage: stages[destinationStageIndex].value,
+                    items: workStages[destinationStageIndex].items.map((item, index) => ({
+                        id: item.id,
+                        position: index
+                    }))
+                }
+            ];
+
+            try {
+                const response = await fetch('/update_work_stage/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+                const data = await response.json();
+                console.log(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Handle work actions (archive, delete, organize, sospeso)
+        async function handleWorkAction(action, e) {
+            e.preventDefault();
+            pendingAction = action;
+            pendingEvent = e;
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function confirmAction() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            if (pendingAction && pendingEvent) {
+                executeWorkAction(pendingAction, pendingEvent);
+            }
+        }
+
+        function cancelAction() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            pendingAction = null;
+            pendingEvent = null;
+        }
+
+        async function executeWorkAction(action, e) {
+            const workId = draggedItem.dataset.id;
+            if (!workId) return;
+
+            const sourceStageIndex = draggedItem.closest('.drop-zone').dataset.stageIndex;
+            const sourceIndex = draggedItem.dataset.index;
+            let destinationStageIndex;
+
+            switch (action) {
+                case 'archive':
+                    destinationStageIndex = stages.findIndex(stage => stage.value === 'archiviate');
+                    break;
+                case 'organize':
+                    destinationStageIndex = stages.findIndex(stage => stage.value === 'offerte_perse');
+                    break;
+                case 'sospeso':
+                    destinationStageIndex = stages.findIndex(stage => stage.value === 'in_sospeso_per_valutazioni');
+                    break;
+                case 'delete':
+                    await deleteWork(workId);
+                    workStages[sourceStageIndex].items.splice(sourceIndex, 1);
+                    renderWorkStages();
+                    break;
+                default:
+                    return;
+            }
+
+            moveItem(sourceStageIndex, destinationStageIndex, sourceIndex, workStages[destinationStageIndex].items.length);
+            hideActionArea();
+        }
+
+        async function deleteWork(workId) {
+            try {
+                const response = await fetch('/delete_work/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: workId })
+                });
+                const data = await response.json();
+                console.log(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = String(date.getFullYear()).slice(-2);
+            return `${day}/${month}/${year}`;
+        }
+
+        // Open iframe
+        function openIframe(url) {
+            const modal = document.getElementById('iframeModal');
+            const iframe = document.getElementById('contentIframe');
+            modal.style.display = "block";
+            iframe.src = url;
+            if (window.innerWidth <= 768) {
+                modal.querySelector('.iframe-content').style.width = '100%';
+                modal.querySelector('.iframe-content').style.height = '100%';
+                modal.querySelector('.iframe-content').style.margin = '0';
+                modal.querySelector('.iframe-content').style.borderRadius = '0';
+            }
+        }
+
+        // Close iframe
+        function closeIframe(modalId = 'iframeModal') {
+            document.getElementById(modalId).style.display = "none";
+            const iframe = document.getElementById(modalId).querySelector('iframe');
+            if (iframe) {
+                iframe.src = "";
+            }
+            // Aggiorna i dati e re-renderizza i work stages
+            fetchWorkStages()
+                .then(() => {
+                    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                    if (searchTerm) {
+                        handleSearch({ target: { value: searchTerm } });
+                    } else {
+                        renderWorkStages();
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante l\'aggiornamento dei dati:', error);
+                    // Continua comunque con i dati esistenti
+                    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                    if (searchTerm) {
+                        handleSearch({ target: { value: searchTerm } });
+                    } else {
+                        renderWorkStages();
+                    }
+                });
+        }
+
+        function closeIframeFromChild() {
+            const modal = document.getElementById('iframeModal');
+            if (modal) {
+                modal.style.display = "none";
+                const iframe = modal.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = ""; // Reset del contenuto dell'iframe
+                }
+            }
+
+            // Aggiorna i dati e re-renderizza i work stages
+            fetchWorkStages()
+                .then(() => {
+                    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                    if (searchTerm) {
+                        handleSearch({ target: { value: searchTerm } });
+                    } else {
+                        renderWorkStages();
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante l\'aggiornamento dei dati:', error);
+                    // Continua comunque con i dati esistenti
+                    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                    if (searchTerm) {
+                        handleSearch({ target: { value: searchTerm } });
+                    } else {
+                        renderWorkStages();
+                    }
+                });
+        }
+
+
+        // Handle search
+        async function handleSearch(event) {
+            try {
+                // Trim dell'input per rimuovere spazi iniziali e finali
+                const searchValue = event.target.value.trim();
+                const searchTerms = searchValue.toLowerCase().split(' ').filter(term => term.trim() !== '');
+                
+            if (searchTerms.length === 0) {
+                workStages = JSON.parse(JSON.stringify(originalWorkStages));
+            } else {
+                workStages = originalWorkStages.map(stage => ({
+                    ...stage,
+                    items: stage.items.filter(item => 
+                        searchTerms.every(term =>
+                            item.title.toLowerCase().includes(term) ||
+                            item.client.toLowerCase().includes(term) ||
+                                (item.client_address && item.client_address.toLowerCase().includes(term)) ||
+                            (item.riferimento && item.riferimento.toLowerCase().includes(term)) ||
+                            item.fornitori.some(f => f.toLowerCase().includes(term)) ||
+                            item.value.toString().toLowerCase().includes(term) ||
+                            item.date.toLowerCase().includes(term)
+                        )
+                    )
+                }));
+            }
+                
+            renderWorkStages();
+
+            const clearIcon = document.getElementById('clearSearchIcon');
+                if (searchValue !== '') {
+                clearIcon.classList.remove('hidden');
+            } else {
+                clearIcon.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Errore durante la ricerca:', error);
+                // In caso di errore, mostra tutti i risultati
+                workStages = JSON.parse(JSON.stringify(originalWorkStages));
+                renderWorkStages();
+            }
+        }
+
+        function toggleHiddenColumns() {
+            const desktopButton = document.getElementById('toggleColumnsButton');
+            const mobileButton = document.getElementById('mobileToggleColumnsButton');
+            const showHidden = desktopButton.innerText === 'Mostra Colonne';
+            
+            stages.forEach(stage => {
+                if (stage.value === 'in_sospeso_per_valutazioni' || stage.value === 'archiviate' || stage.value === 'offerte_perse') {
+                    stage.hidden = !showHidden;
+                }
+            });
+            
+            const newText = showHidden ? 'Nascondi Colonne' : 'Mostra Colonne';
+            desktopButton.innerText = newText;
+            mobileButton.innerText = newText;
+            
+            desktopButton.style.backgroundColor = showHidden ? '#5c5c5c' : 'white';
+            desktopButton.style.color = showHidden ? 'white' : 'black';
+            
+            renderWorkStages();
+        }
+
+        function toggleOptionsMenu() {
+            const menu = document.getElementById('optionsMenu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('opacity-0');
+            menu.classList.toggle('opacity-100');
+        }
+
+        // Add clearSearch function
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            handleSearch({ target: searchInput });
+        }
+
+        // Mobile menu functions
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('open');
+            document.getElementById('mobileMenuOverlay').style.display = 'block';
+        }
+        
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('mobileMenuOverlay').style.display = 'none';
+        }
+
+        // WhatsApp functions
+        let whatsappFornitori = [];
+        let whatsappClienti = [];
+        let currentWhatsAppView = 'fornitori'; // default
+
+        // Funzione per verificare se un numero è un cellulare
+        function isCellPhone(number) {
+            if (!number) return false;
+            const cleanNumber = number.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+            return /^(3\d{8,9}|00393\d{8,9}|\+393\d{8,9})$/.test(cleanNumber) || 
+                   /^(3\d{8,9})$/.test(cleanNumber.replace(/^\+39/, '').replace(/^0039/, ''));
+        }
+
+        // Funzione per normalizzare il numero di telefono per WhatsApp
+        function normalizePhoneForWhatsApp(number) {
+            let cleanNumber = number.replace(/\s+/g, '').replace(/[^\d+]/g, '');
+            
+            if (cleanNumber.startsWith('+39')) {
+                cleanNumber = cleanNumber.substring(3);
+            } else if (cleanNumber.startsWith('0039')) {
+                cleanNumber = cleanNumber.substring(4);
+            }
+            
+            if (!cleanNumber.startsWith('39') && cleanNumber.length === 10) {
+                cleanNumber = '39' + cleanNumber;
+            }
+            
+            return cleanNumber;
+        }
+
+        // Funzione per estrarre numeri di cellulare da una stringa
+        function extractCellPhones(phoneString) {
+            if (!phoneString) return [];
+            const numbers = phoneString.split(/[,;]|\s{2,}/).map(n => n.trim()).filter(n => n);
+            return numbers.filter(number => isCellPhone(number));
+        }
+
+        // Funzione per aprire WhatsApp
+        function openWhatsApp(phoneNumber) {
+            const normalizedNumber = normalizePhoneForWhatsApp(phoneNumber);
+            const whatsappUrl = `https://wa.me/${normalizedNumber}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Funzione per gestire il click su un fornitore
+        function handleFornitoreWhatsAppClick(fornitoreId, fornitoreName, phoneString) {
+            const cellPhones = extractCellPhones(phoneString);
+            
+            if (cellPhones.length === 0) {
+                alert('Nessun numero di cellulare valido trovato per ' + fornitoreName);
+                return;
+            }
+            
+            if (cellPhones.length === 1) {
+                openWhatsApp(cellPhones[0]);
+                closeWhatsAppModal();
+            } else {
+                // Mostra selezione numero se multipli
+                showPhoneSelector(cellPhones, fornitoreName);
+            }
+        }
+
+        // Funzione per gestire il click su un cliente
+        function handleClienteWhatsAppClick(clienteId, clienteName, phoneString) {
+            const cellPhones = extractCellPhones(phoneString);
+            
+            if (cellPhones.length === 0) {
+                alert('Nessun numero di cellulare valido trovato per ' + clienteName);
+                return;
+            }
+            
+            if (cellPhones.length === 1) {
+                openWhatsApp(cellPhones[0]);
+                closeWhatsAppModal();
+            } else {
+                // Mostra selezione numero se multipli
+                showPhoneSelector(cellPhones, clienteName);
+            }
+        }
+
+        // Funzioni per il toggle
+        function switchToFornitori() {
+            currentWhatsAppView = 'fornitori';
+            document.getElementById('fornitoriToggle').classList.add('active');
+            document.getElementById('clientiToggle').classList.remove('active');
+            renderWhatsAppList();
+        }
+
+        function switchToClienti() {
+            currentWhatsAppView = 'clienti';
+            document.getElementById('clientiToggle').classList.add('active');
+            document.getElementById('fornitoriToggle').classList.remove('active');
+            renderWhatsAppList();
+        }
+
+        // Funzione per renderizzare la lista corrente
+        function renderWhatsAppList() {
+            const list = document.getElementById('whatsappFornitoriList');
+            
+            if (currentWhatsAppView === 'fornitori') {
+                renderFornitoriList(list);
+            } else {
+                renderClientiList(list);
+            }
+        }
+
+        // Renderizza lista fornitori
+        function renderFornitoriList(container) {
+            if (whatsappFornitori.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">Nessun fornitore con WhatsApp trovato</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            whatsappFornitori.forEach(fornitore => {
+                const cellPhones = extractCellPhones(fornitore.Telefono);
+                const phoneDisplay = cellPhones.join(', ');
+                
+                const item = document.createElement('div');
+                item.className = 'whatsapp-fornitore-item';
+                item.onclick = () => handleFornitoreWhatsAppClick(fornitore.id, fornitore.Nome, fornitore.Telefono);
+                
+                item.innerHTML = `
+                    <div class="fornitore-info">
+                        <div class="fornitore-name">${fornitore.Nome}</div>
+                        <div class="fornitore-categoria">🏢 ${fornitore.Categoria || 'Categoria non specificata'}</div>
+                        <div class="fornitore-telefono">📱 ${phoneDisplay}</div>
+                    </div>
+                    <svg viewBox="0 0 24 24" class="whatsapp-icon" fill="#25D366">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50002 12C3.50002 7.30558 7.3056 3.5 12 3.5C16.6944 3.5 20.5 7.30558 20.5 12C20.5 16.6944 16.6944 20.5 12 20.5C10.3278 20.5 8.77127 20.0182 7.45798 19.1861C7.21357 19.0313 6.91408 18.9899 6.63684 19.0726L3.75769 19.9319L4.84173 17.3953C4.96986 17.0955 4.94379 16.7521 4.77187 16.4751C3.9657 15.176 3.50002 13.6439 3.50002 12ZM12 1.5C6.20103 1.5 1.50002 6.20101 1.50002 12C1.50002 13.8381 1.97316 15.5683 2.80465 17.0727L1.08047 21.107C0.928048 21.4637 0.99561 21.8763 1.25382 22.1657C1.51203 22.4552 1.91432 22.5692 2.28599 22.4582L6.78541 21.1155C8.32245 21.9965 10.1037 22.5 12 22.5C17.799 22.5 22.5 17.799 22.5 12C22.5 6.20101 17.799 1.5 12 1.5ZM14.2925 14.1824L12.9783 15.1081C12.3628 14.7575 11.6823 14.2681 10.9997 13.5855C10.2901 12.8759 9.76402 12.1433 9.37612 11.4713L10.2113 10.7624C10.5697 10.4582 10.6678 9.94533 10.447 9.53028L9.38284 7.53028C9.23954 7.26097 8.98116 7.0718 8.68115 7.01654C8.38113 6.96129 8.07231 7.046 7.84247 7.24659L7.52696 7.52195C6.76823 8.18414 6.3195 9.2723 6.69141 10.3741C7.07698 11.5163 7.89983 13.314 9.58552 14.9997C11.3991 16.8133 13.2413 17.5275 14.3186 17.8049C15.1866 18.0283 16.008 17.7288 16.5868 17.2572L17.1783 16.7752C17.4313 16.5691 17.5678 16.2524 17.544 15.9269C17.5201 15.6014 17.3389 15.308 17.0585 15.1409L15.3802 14.1409C15.0412 13.939 14.6152 13.9552 14.2925 14.1824Z"/>
+                    </svg>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        // Renderizza lista clienti
+        function renderClientiList(container) {
+            if (whatsappClienti.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">Nessun cliente con WhatsApp trovato</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            whatsappClienti.forEach(cliente => {
+                const cellPhones = extractCellPhones(cliente.cellulare);
+                const phoneDisplay = cellPhones.join(', ');
+                
+                // Determina il nome da mostrare
+                let displayName = '';
+                if (cliente.descrizione) {
+                    displayName = cliente.descrizione;
+                } else if (cliente.nome && cliente.cognome) {
+                    displayName = `${cliente.nome} ${cliente.cognome}`;
+                } else if (cliente.nome) {
+                    displayName = cliente.nome;
+                } else if (cliente.cognome) {
+                    displayName = cliente.cognome;
+                } else {
+                    displayName = 'Cliente senza nome';
+                }
+                
+                const item = document.createElement('div');
+                item.className = 'whatsapp-fornitore-item';
+                item.onclick = () => handleClienteWhatsAppClick(cliente.id, displayName, cliente.cellulare);
+                
+                item.innerHTML = `
+                    <div class="fornitore-info">
+                        <div class="fornitore-name">${displayName}</div>
+                        <div class="fornitore-categoria">👤 Cliente</div>
+                        <div class="fornitore-telefono">📱 ${phoneDisplay}</div>
+                    </div>
+                    <svg viewBox="0 0 24 24" class="whatsapp-icon" fill="#25D366">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50002 12C3.50002 7.30558 7.3056 3.5 12 3.5C16.6944 3.5 20.5 7.30558 20.5 12C20.5 16.6944 16.6944 20.5 12 20.5C10.3278 20.5 8.77127 20.0182 7.45798 19.1861C7.21357 19.0313 6.91408 18.9899 6.63684 19.0726L3.75769 19.9319L4.84173 17.3953C4.96986 17.0955 4.94379 16.7521 4.77187 16.4751C3.9657 15.176 3.50002 13.6439 3.50002 12ZM12 1.5C6.20103 1.5 1.50002 6.20101 1.50002 12C1.50002 13.8381 1.97316 15.5683 2.80465 17.0727L1.08047 21.107C0.928048 21.4637 0.99561 21.8763 1.25382 22.1657C1.51203 22.4552 1.91432 22.5692 2.28599 22.4582L6.78541 21.1155C8.32245 21.9965 10.1037 22.5 12 22.5C17.799 22.5 22.5 17.799 22.5 12C22.5 6.20101 17.799 1.5 12 1.5ZM14.2925 14.1824L12.9783 15.1081C12.3628 14.7575 11.6823 14.2681 10.9997 13.5855C10.2901 12.8759 9.76402 12.1433 9.37612 11.4713L10.2113 10.7624C10.5697 10.4582 10.6678 9.94533 10.447 9.53028L9.38284 7.53028C9.23954 7.26097 8.98116 7.0718 8.68115 7.01654C8.38113 6.96129 8.07231 7.046 7.84247 7.24659L7.52696 7.52195C6.76823 8.18414 6.3195 9.2723 6.69141 10.3741C7.07698 11.5163 7.89983 13.314 9.58552 14.9997C11.3991 16.8133 13.2413 17.5275 14.3186 17.8049C15.1866 18.0283 16.008 17.7288 16.5868 17.2572L17.1783 16.7752C17.4313 16.5691 17.5678 16.2524 17.544 15.9269C17.5201 15.6014 17.3389 15.308 17.0585 15.1409L15.3802 14.1409C15.0412 13.939 14.6152 13.9552 14.2925 14.1824Z"/>
+                    </svg>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        // Funzione per aprire il modal WhatsApp
+        async function openWhatsAppModal() {
+            const modal = document.getElementById('whatsappFornitoriModal');
+            const list = document.getElementById('whatsappFornitoriList');
+            
+            modal.style.display = 'block';
+            list.innerHTML = '<p style="text-align: center; color: #666;">Caricamento...</p>';
+            
+            try {
+                // Carica fornitori
+                const fornitoriResponse = await fetch('/api/fornitori');
+                if (!fornitoriResponse.ok) throw new Error('Errore nel caricamento fornitori');
+                
+                const fornitori = await fornitoriResponse.json();
+                whatsappFornitori = fornitori.filter(f => 
+                    f.Telefono && extractCellPhones(f.Telefono).length > 0
+                );
+                
+                // Carica clienti
+                const clientiResponse = await fetch('/api/clienti');
+                if (!clientiResponse.ok) throw new Error('Errore nel caricamento clienti');
+                
+                const clienti = await clientiResponse.json();
+                whatsappClienti = clienti.filter(c => 
+                    c.cellulare && extractCellPhones(c.cellulare).length > 0
+                );
+                
+                // Reset al default (fornitori)
+                currentWhatsAppView = 'fornitori';
+                document.getElementById('fornitoriToggle').classList.add('active');
+                document.getElementById('clientiToggle').classList.remove('active');
+                
+                // Renderizza la lista
+                renderWhatsAppList();
+                
+            } catch (error) {
+                console.error('Errore:', error);
+                list.innerHTML = '<p style="text-align: center; color: #ff0000;">Errore nel caricamento dei dati</p>';
+            }
+        }
+
+        // Funzione per chiudere il modal WhatsApp
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappFornitoriModal').style.display = 'none';
+        }
+
+        // Funzione per mostrare il selettore di numeri (riutilizzata da fornitori.html)
+        function showPhoneSelector(phoneNumbers, contactName) {
+            if (confirm(`${contactName} ha più numeri. Vuoi aprire WhatsApp con il primo numero disponibile (${phoneNumbers[0]})?`)) {
+                openWhatsApp(phoneNumbers[0]);
+                closeWhatsAppModal();
+            }
+        }
+
+        // Funzione per chiudere il modal cliccando fuori
+        function closeWhatsAppModalOnOutsideClick(event) {
+            if (event.target === document.getElementById('whatsappFornitoriModal')) {
+                closeWhatsAppModal();
+            }
+        }
+
+        // ====== FUNZIONI PER BARRA DI SCORRIMENTO PERSONALIZZATA ======
+        
+        function initializeCustomScrollbar() {
+            const container = document.getElementById('main');
+            const scrollbar = document.getElementById('customScrollbar');
+            const thumb = document.getElementById('customScrollbarThumb');
+            
+            if (!container || !scrollbar || !thumb) return;
+            
+            let isDragging = false;
+            let startX = 0;
+            let startScrollLeft = 0;
+            
+            function updateScrollbar() {
+                const containerWidth = container.clientWidth;
+                const scrollWidth = container.scrollWidth;
+                const scrollLeft = container.scrollLeft;
+                
+                if (scrollWidth > containerWidth) {
+                    scrollbar.style.display = 'block';
+                    
+                    const thumbWidth = Math.max((containerWidth / scrollWidth) * scrollbar.clientWidth, 30);
+                    const maxThumbLeft = scrollbar.clientWidth - thumbWidth;
+                    const thumbLeft = Math.min((scrollLeft / (scrollWidth - containerWidth)) * maxThumbLeft, maxThumbLeft);
+                    
+                    thumb.style.width = thumbWidth + 'px';
+                    thumb.style.transform = `translateX(${thumbLeft}px)`;
+                    thumb.style.opacity = '1';
+                } else {
+                    scrollbar.style.display = 'block';
+                    thumb.style.width = '100%';
+                    thumb.style.transform = 'translateX(0px)';
+                    thumb.style.opacity = '0.3';
+                }
+            }
+            
+            // Scroll più fluido con requestAnimationFrame
+            let ticking = false;
+            function handleScroll() {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        updateScrollbar();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            container.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', updateScrollbar);
+            
+            // Drag più reattivo
+            thumb.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startScrollLeft = container.scrollLeft;
+                thumb.style.cursor = 'grabbing';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                const deltaX = e.clientX - startX;
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const scrollRatio = deltaX / scrollbarRect.width;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                
+                const newScrollLeft = startScrollLeft + (scrollRatio * maxScroll);
+                container.scrollLeft = Math.max(0, Math.min(newScrollLeft, maxScroll));
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    thumb.style.cursor = 'pointer';
+                    document.body.style.userSelect = '';
+                }
+            });
+            
+            // Click sulla barra per saltare (più preciso)
+            scrollbar.addEventListener('click', (e) => {
+                if (e.target === thumb || isDragging) return;
+                
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const clickX = e.clientX - scrollbarRect.left;
+                const scrollbarWidth = scrollbarRect.width;
+                const scrollRatio = clickX / scrollbarWidth;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                
+                container.scrollLeft = scrollRatio * maxScroll;
+            });
+            
+            updateScrollbar();
+        }
+
+        // Aggiorna loadWorkStages per inizializzare la barra personalizzata
+        async function loadWorkStages(addToHistory = true) {
+            try {
+                const response = await fetch('/api/work_stages/');
+                const data = await response.json();
+                
+                const container = document.querySelector('.stage-columns');
+                container.innerHTML = '';
+                
+                Object.entries(data.stages).forEach(([stageKey, stage]) => {
+                    const stageElement = document.createElement('div');
+                    stageElement.className = 'stage';
+                    stageElement.dataset.stage = stageKey;
+                    
+                    stageElement.innerHTML = `
+                        <h2 class="stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors" 
+                            onclick="editStageTitle(this, '${stageKey}')">
+                            ${stage.name}
+                        </h2>
+                        <div class="work-items space-y-3" style="min-height: 50px;"></div>
+                    `;
+                    
+                    container.appendChild(stageElement);
+                });
+                
+                // Popola con i lavori
+                Object.entries(data.works).forEach(([stageKey, works]) => {
+                    const stageElement = container.querySelector(`[data-stage="${stageKey}"]`);
+                    if (stageElement) {
+                        const workItemsContainer = stageElement.querySelector('.work-items');
+                        works.forEach(work => {
+                            const workElement = createWorkElement(work);
+                            workItemsContainer.appendChild(workElement);
+                        });
+                    }
+                });
+                
+                // Inizializza la barra di scorrimento personalizzata
+                setTimeout(() => {
+                    initializeCustomScrollbar();
+                }, 100); // Piccolo delay per permettere al layout di stabilizzarsi
+                
+            } catch (error) {
+                console.error('Error loading work stages:', error);
+            }
+        }
+        
+        // Assicurati che la barra si aggiorni quando la finestra viene ridimensionata
+        window.addEventListener('resize', () => {
+            setTimeout(() => {
+                initializeCustomScrollbar();
+            }, 100);
+        });
+        
+        // Inizializza la barra anche quando il DOM è completamente caricato
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                initializeCustomScrollbar();
+            }, 300);
+        });
+
+        // ====== FUNZIONI PER SCROLLING LATERALE ======
+
+        // Sistema di Undo/Redo
+        let actionHistory = [];
+        let currentActionIndex = -1;
+        const MAX_HISTORY_SIZE = 50;
+
+        // Struttura di un'azione: { type, data, timestamp }
+        function saveAction(type, data) {
+            // Rimuovi tutte le azioni dopo l'indice corrente (se abbiamo fatto undo)
+            actionHistory = actionHistory.slice(0, currentActionIndex + 1);
+            
+            // Aggiungi la nuova azione
+            actionHistory.push({
+                type: type,
+                data: data,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Mantieni solo le ultime MAX_HISTORY_SIZE azioni
+            if (actionHistory.length > MAX_HISTORY_SIZE) {
+                actionHistory.shift();
+            } else {
+                currentActionIndex++;
+            }
+            
+            updateUndoRedoButtons();
+        }
+
+        function undoLastAction() {
+            if (currentActionIndex >= 0) {
+                const action = actionHistory[currentActionIndex];
+                executeUndoAction(action);
+                currentActionIndex--;
+                updateUndoRedoButtons();
+            }
+        }
+
+        function redoLastAction() {
+            if (currentActionIndex < actionHistory.length - 1) {
+                currentActionIndex++;
+                const action = actionHistory[currentActionIndex];
+                executeRedoAction(action);
+                updateUndoRedoButtons();
+            }
+        }
+
+        function updateUndoRedoButtons() {
+            const undoButton = document.getElementById('undoButton');
+            const redoButton = document.getElementById('redoButton');
+            
+            undoButton.disabled = currentActionIndex < 0;
+            redoButton.disabled = currentActionIndex >= actionHistory.length - 1;
+        }
+
+        async function executeUndoAction(action) {
+            try {
+                switch (action.type) {
+                    case 'moveWork':
+                        // Sposta il lavoro dalla destinazione alla sorgente
+                        await moveWorkBetweenStages(action.data.workId, action.data.toStage, action.data.fromStage);
+                        break;
+                    case 'updateStage':
+                        // Ripristina il nome della fase precedente
+                        await updateStageNameLocally(action.data.stageKey, action.data.oldName);
+                        break;
+                    case 'createWork':
+                        // Elimina il lavoro creato
+                        await deleteWorkSilently(action.data.workId);
+                        break;
+                    case 'deleteWork':
+                        // Ricrea il lavoro eliminato
+                        await recreateWork(action.data.workData);
+                        break;
+                }
+            } catch (error) {
+                console.error('Errore durante l\'undo:', error);
+                alert('Errore durante l\'annullamento dell\'azione');
+            }
+        }
+
+        async function executeRedoAction(action) {
+            try {
+                switch (action.type) {
+                    case 'moveWork':
+                        // Sposta il lavoro dalla sorgente alla destinazione
+                        await moveWorkBetweenStages(action.data.workId, action.data.fromStage, action.data.toStage);
+                        break;
+                    case 'updateStage':
+                        // Riapplica il nuovo nome della fase
+                        await updateStageNameLocally(action.data.stageKey, action.data.newName);
+                        break;
+                    case 'createWork':
+                        // Ricrea il lavoro
+                        await recreateWork(action.data.workData);
+                        break;
+                    case 'deleteWork':
+                        // Elimina di nuovo il lavoro
+                        await deleteWorkSilently(action.data.workId);
+                        break;
+                }
+            } catch (error) {
+                console.error('Errore durante il redo:', error);
+                alert('Errore durante il ripristino dell\'azione');
+            }
+        }
+
+        async function moveWorkBetweenStages(workId, fromStage, toStage) {
+            try {
+                const response = await fetch('/update_work_stage/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        work_id: workId,
+                        new_stage: toStage
+                    })
+                });
+
+                if (response.ok) {
+                    // Ricarica le colonne senza aggiungere all'history
+                    await loadWorkStages(false);
+                } else {
+                    throw new Error('Errore durante lo spostamento');
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function updateStageNameLocally(stageKey, newName) {
+            const response = await fetch('/api/update_stage_name/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    stage_key: stageKey,
+                    new_name: newName
+                })
+            });
+
+            if (response.ok) {
+                // Aggiorna l'UI senza aggiungere all'history
+                document.querySelector(`[data-stage="${stageKey}"] .stage-title`).textContent = newName;
+            }
+        }
+
+        async function deleteWorkSilently(workId) {
+            const response = await fetch('/delete_work/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    work_id: workId
+                })
+            });
+
+            if (response.ok) {
+                await loadWorkStages(false);
+            }
+        }
+
+        async function recreateWork(workData) {
+            const response = await fetch('/add_work/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(workData)
+            });
+
+            if (response.ok) {
+                await loadWorkStages(false);
+            }
+        }
+
+        async function dropWorkItem(workId, targetStage) {
+            const sourceStage = currentlyDraggedElement.parentElement.dataset.stage;
+            
+            if (sourceStage === targetStage) return;
+
+            // Salva l'azione nell'history prima di eseguirla
+            const workElement = currentlyDraggedElement;
+            const workDescription = workElement.querySelector('h3').textContent;
+            
+            saveAction('moveWork', {
+                workId: workId,
+                fromStage: sourceStage,
+                toStage: targetStage,
+                workData: {
+                    // Salva i dati del lavoro per eventuali rollback
+                    id: workId,
+                    sourceStage: sourceStage
+                }
+            });
+
+            // Aggiungi alla cronologia globale
+            addToGlobalHistory('ticket', 'move', 
+                `Ticket "${workDescription}" spostato da "${getStageDisplayName(sourceStage)}" a "${getStageDisplayName(targetStage)}"`, 
+                workId
+            );
+
+            try {
+                const response = await fetch('/update_work_stage/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        work_id: workId,
+                        new_stage: targetStage
+                    })
+                });
+
+                if (response.ok) {
+                    await loadWorkStages(false); // false per non aggiungere all'history
+                } else {
+                    throw new Error('Errore durante lo spostamento');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Errore durante lo spostamento del lavoro');
+                // In caso di errore, rimuovi l'ultima azione dall'history
+                actionHistory.pop();
+                currentActionIndex--;
+                updateUndoRedoButtons();
+            }
+        }
+
+        // Funzione helper per ottenere il nome visualizzato della fase
+        function getStageDisplayName(stageKey) {
+            const stageNames = {
+                'in_sospeso_per_valutazioni': 'In Sospeso per Valutazioni',
+                'nuovo_sopralluogo': 'Nuovo Sopralluogo',
+                'da_preventivare': 'Da Preventivare',
+                'inviato_preventivo': 'Inviato Preventivo',
+                'confermato_da_eseguire': 'Confermato da Eseguire',
+                'con_piattaforma_o_fune': 'In corso o In Lavorazione',
+                'in_corso': 'In Corso',
+                'da_fatturare': 'Da Fatturare',
+                'fatturate_da_pagare': 'Fatturato da Pagare',
+                'archiviate': 'Archiviate',
+                'offerte_perse': 'Offerte Perse'
+            };
+            return stageNames[stageKey] || stageKey;
+        }
+
+        async function loadWorkStages(addToHistory = true) {
+            try {
+                const response = await fetch('/api/work_stages/');
+                const data = await response.json();
+                
+                const container = document.querySelector('.stage-columns');
+                container.innerHTML = '';
+                
+                Object.entries(data.stages).forEach(([stageKey, stage]) => {
+                    const stageElement = document.createElement('div');
+                    stageElement.className = 'stage';
+                    stageElement.dataset.stage = stageKey;
+                    
+                    stageElement.innerHTML = `
+                        <h2 class="stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors" 
+                            onclick="editStageTitle(this, '${stageKey}')" 
+                            title="Clicca per modificare il nome della colonna">${stage.name}</h2>
+                        <div class="stage-content min-h-[100px]" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            ${stage.works.map(work => `
+                                <div class="work-item bg-white rounded-lg shadow-md p-4 mb-3 cursor-move border-l-4 border-blue-500" 
+                                     draggable="true" 
+                                     ondragstart="drag(event)" 
+                                     data-work-id="${work.id}"
+                                     onclick="openWorkDetails(${work.id})">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-semibold text-gray-800 text-sm">${work.descrizione || 'Senza descrizione'}</h3>
+                                        <span class="ticket-number bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-bold">${work.numero_ticket}</span>
+                                    </div>
+                                    <p class="text-gray-600 text-xs mb-2">${work.cliente_nome || 'Cliente non specificato'}</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-green-600 font-bold text-sm">€${work.importo || '0'}</span>
+                                        <span class="text-gray-500 text-xs">${work.data_creazione || ''}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    container.appendChild(stageElement);
+                });
+                
+                // Aggiorna i contatori
+                updateStageCounts();
+                
+            } catch (error) {
+                console.error('Errore durante il caricamento delle fasi:', error);
+            }
+        }
+
+        // Funzioni per la modifica dei nomi delle colonne
+        function editStageTitle(titleElement, stageKey) {
+            if (currentEditingStage) return; // Evita modifiche multiple simultanee
+            
+            currentEditingStage = stageKey;
+            const currentText = titleElement.textContent;
+            
+            // Crea un input per la modifica
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
+            input.className = 'bg-white border border-blue-500 rounded px-2 py-1 text-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-400';
+            input.style.width = '100%';
+            
+            // Sostituisci il titolo con l'input
+            titleElement.replaceWith(input);
+            input.focus();
+            input.select();
+            
+            // Funzione per salvare la modifica
+            const saveEdit = async () => {
+                const newText = input.value.trim();
+                if (newText && newText !== currentText) {
+                    // Salva l'azione nell'history
+                    saveAction('updateStage', {
+                        stageKey: stageKey,
+                        oldName: currentText,
+                        newName: newText
+                    });
+                    
+                    // Aggiungi alla cronologia globale
+                    addToGlobalHistory('column', 'rename', 
+                        `Nome colonna cambiato da "${currentText}" a "${newText}"`, 
+                        stageKey
+                    );
+                    
+                    try {
+                        const response = await fetch('/api/update_stage_name/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                stage_key: stageKey,
+                                new_name: newText
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            // Ricrea l'elemento titolo
+                            const newTitle = document.createElement('h2');
+                            newTitle.className = 'stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors';
+                            newTitle.onclick = () => editStageTitle(newTitle, stageKey);
+                            newTitle.title = 'Clicca per modificare il nome della colonna';
+                            newTitle.textContent = newText;
+                            input.replaceWith(newTitle);
+                        } else {
+                            throw new Error('Errore durante il salvataggio');
+                        }
+                    } catch (error) {
+                        console.error('Errore durante il salvataggio:', error);
+                        alert('Errore durante il salvataggio del nome della colonna');
+                        // Ripristina il titolo originale
+                        const originalTitle = document.createElement('h2');
+                        originalTitle.className = 'stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors';
+                        originalTitle.onclick = () => editStageTitle(originalTitle, stageKey);
+                        originalTitle.title = 'Clicca per modificare il nome della colonna';
+                        originalTitle.textContent = currentText;
+                        input.replaceWith(originalTitle);
+                    }
+                } else {
+                    // Ripristina il titolo originale se non ci sono modifiche
+                    const originalTitle = document.createElement('h2');
+                    originalTitle.className = 'stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors';
+                    originalTitle.onclick = () => editStageTitle(originalTitle, stageKey);
+                    originalTitle.title = 'Clicca per modificare il nome della colonna';
+                    originalTitle.textContent = currentText;
+                    input.replaceWith(originalTitle);
+                }
+                currentEditingStage = null;
+            };
+            
+            // Salva con Enter o perde focus
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    // Annulla la modifica con Escape
+                    const originalTitle = document.createElement('h2');
+                    originalTitle.className = 'stage-title font-bold text-lg mb-4 cursor-pointer hover:text-blue-600 transition-colors';
+                    originalTitle.onclick = () => editStageTitle(originalTitle, stageKey);
+                    originalTitle.title = 'Clicca per modificare il nome della colonna';
+                    originalTitle.textContent = currentText;
+                    input.replaceWith(originalTitle);
+                    currentEditingStage = null;
+                }
+            });
+            
+            input.addEventListener('blur', saveEdit);
+        }
+
+        // Sistema di Cronologia Globale
+        let globalHistory = [];
+        let filteredHistory = [];
+        let currentFilter = 'all';
+
+        // Funzione per aggiungere eventi alla cronologia globale
+        function addToGlobalHistory(type, action, details, entityId = null) {
+            const historyItem = {
+                id: Date.now() + Math.random(),
+                type: type, // 'ticket', 'column', 'client', 'supplier'
+                action: action, // 'create', 'update', 'delete', 'move', 'rename'
+                details: details,
+                entityId: entityId,
+                timestamp: new Date().toISOString(),
+                user: 'Utente Corrente' // Puoi sostituire con l'utente reale
+            };
+
+            // Salva nel backend
+            saveHistoryToBackend(historyItem);
+
+            // Aggiorna la cronologia locale
+            globalHistory.unshift(historyItem);
+            
+            // Mantieni solo gli ultimi 1000 elementi
+            if (globalHistory.length > 1000) {
+                globalHistory = globalHistory.slice(0, 1000);
+            }
+        }
+
+        async function saveHistoryToBackend(historyItem) {
+            try {
+                await fetch('/api/save_history/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(historyItem)
+                });
+            } catch (error) {
+                console.error('Errore nel salvare la cronologia:', error);
+            }
+        }
+
+        async function loadGlobalHistory() {
+            try {
+                const response = await fetch('/api/cronologia/');
+                if (response.ok) {
+                    const data = await response.json();
+                    globalHistory = data.cronologia || [];
+                    filteredHistory = globalHistory;
+                    renderHistoryList();
+                }
+            } catch (error) {
+                console.error('Errore nel caricare la cronologia:', error);
+                document.getElementById('historyList').innerHTML = 
+                    '<div class="text-center py-8 text-red-500">Errore nel caricamento della cronologia</div>';
+            }
+        }
+
+        function showGlobalHistory() {
+            document.getElementById('globalHistoryModal').style.display = 'block';
+            loadGlobalHistory();
+        }
+
+        function closeGlobalHistory() {
+            document.getElementById('globalHistoryModal').style.display = 'none';
+        }
+
+        function filterHistory(type) {
+            currentFilter = type;
+            
+            // Aggiorna i pulsanti attivi
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-500', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-blue-500', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            
+            // Filtra la cronologia
+            if (type === 'all') {
+                filteredHistory = globalHistory;
+            } else {
+                filteredHistory = globalHistory.filter(item => item.tipo.toLowerCase() === type.toLowerCase() || (type === 'ticket' && item.tipo.toLowerCase() === 'work'));
+            }
+            
+            renderHistoryList();
+        }
+
+        function renderHistoryList() {
+            const historyList = document.getElementById('historyList');
+            
+            if (filteredHistory.length === 0) {
+                historyList.innerHTML = '<div class="text-center py-8 text-gray-500">Nessuna modifica trovata</div>';
+                return;
+            }
+            
+            const historyHTML = filteredHistory.map(item => {
+                const formattedDate = item.timestamp; // Già formattato dal backend
+                
+                let iconColor = 'text-blue-500';
+                let icon = '📝';
+                
+                switch (item.tipo.toLowerCase()) {
+                    case 'ticket':
+                    case 'work':
+                        icon = '🎫';
+                        iconColor = 'text-green-500';
+                        break;
+                    case 'column':
+                        icon = '📋';
+                        iconColor = 'text-purple-500';
+                        break;
+                    case 'client':
+                        icon = '👤';
+                        iconColor = 'text-blue-500';
+                        break;
+                    case 'supplier':
+                        icon = '🏢';
+                        iconColor = 'text-orange-500';
+                        break;
+                    case 'reference':
+                        icon = '📞';
+                        iconColor = 'text-teal-500';
+                        break;
+                }
+                
+                return `
+                    <div class="border-l-4 border-gray-200 pl-4 py-3 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-xl">${icon}</span>
+                                <div>
+                                    <div class="font-medium text-gray-900">${item.dettagli}</div>
+                                    <div class="text-sm text-gray-500">${item.tipo} • ${item.azione}</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-400">${formattedDate}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            historyList.innerHTML = historyHTML;
+        }
+
+        // Chiudi modal quando si clicca fuori
+        document.getElementById('globalHistoryModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('globalHistoryModal')) {
+                closeGlobalHistory();
+            }
+        });
+
+        // Funzione globale accessibile dagli iframe per aggiungere eventi alla cronologia
+        window.addToParentHistory = function(type, action, details, entityId = null) {
+            if (window.parent && window.parent.addToGlobalHistory) {
+                window.parent.addToGlobalHistory(type, action, details, entityId);
+            }
+        };
+    </script>
+</body>
+</html>
+

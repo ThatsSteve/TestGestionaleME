@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strumenti - Missionedilizia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+        .popup h2 {
+            font-size: 2rem;
+            text-align: center;
+            color: #333;
+        }
+        header {
+            height: 64px; /* Altezza uniforme per l'header */
+        }
+        header .h-10 {
+            height: 40px; /* Altezza uniforme per il logo */
+        }
+        header input {
+            height: 40px; /* Altezza uniforme per l'input di ricerca */
+        }
+        header button {
+            height: 40px; /* Altezza uniforme per i pulsanti */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col" style="background: linear-gradient(to bottom right, #f4a81e, #7a7a7a);">
+    <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <a href="/"><img src="/static/LogoSmall.png" alt="Missionedilizia Logo" class="h-10"></a>
+        </div>
+        <div class="flex-1 flex justify-center">
+            <div class="relative w-1/2">
+                <input
+                    type="text"
+                    placeholder="Cerca..."
+                    class="w-full p-2 pl-10 bg-white border border-gray-400 rounded-full shadow-sm focus:outline-none focus:border-gray-600"
+                />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+        <div class="relative flex items-center space-x-4">
+            <button
+                class="bg-green-500 text-white h-10 w-10 rounded-full shadow-lg hover:bg-green-600 flex items-center justify-center text-2xl py-1 transition"
+                style="padding-top: 0"
+            >
+                +
+            </button>
+            <div class="relative group">
+                <button
+                    class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-600 transition"
+                >
+                    Tutte le Opzioni
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="z-index: 1000">
+                    <ul class="py-2">
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="showPopup()"
+                            >
+                                Strumenti AI
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                id="toggleColumnsButton"
+                                onclick="toggleHiddenColumns()"
+                            >
+                                Mostra Nascoste
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="window.location.href = '/fornitori'"
+                            >
+                                Fornitori
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="window.location.href = '/clienti'"
+                            >
+                                Clienti
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="block px-4 py-2 w-full text-left text-gray-700 hover:bg-gray-100"
+                                onclick="openIframe('/crea_ticket_iframe')"
+                            >
+                                Ticket
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 p-6">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- Main content area (empty for now) -->
+        </div>
+    </main>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <h2>Presto Disponibile</h2>
+    </div>
+
+    <div id="iframeModal" class="iframe-modal">
+        <div class="iframe-content">
+            <span class="close-iframe" onclick="closeIframe()">&times;</span>
+            <iframe id="contentIframe"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+        }
+
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('popup');
+            if (popup.style.display === 'block' && !popup.contains(event.target)) {
+                popup.style.display = 'none';
+            }
+        });
+
+        function openIframe(url) {
+            const modal = document.getElementById('iframeModal');
+            const iframe = document.getElementById('contentIframe');
+            modal.style.display = "block";
+            iframe.src = url;
+        }
+
+        function closeIframe() {
+            const modal = document.getElementById('iframeModal');
+            modal.style.display = "none";
+            const iframe = document.getElementById('contentIframe');
+            if (iframe) {
+                iframe.src = "";
+            }
+        }
+    </script>
+</body>
+</html>
